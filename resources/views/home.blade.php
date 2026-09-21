@@ -31,11 +31,13 @@
                 <a href="{{ route('game') }}" class="action-row primary">
                     <span class="action-icon">🎮</span>
                     <span>Start het spel!</span>
+                </button>
+                <a href="{{ route('speluitleg') }}" class="action-row secondary">
                 </a>
                 <button type="button" class="action-row secondary">
                     <span class="action-icon">?</span>
                     <span>Hoe werkt het?</span>
-                </button>
+                </a>
                 <button type="button" class="action-row secondary">
                     <span class="action-icon">📚</span>
                     <span>Leer over klimaat</span>
