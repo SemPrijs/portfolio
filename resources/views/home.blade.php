@@ -28,10 +28,10 @@
             </div>
 
             <div class="action-stack">
-                <button type="button" class="action-row primary">
+                <a href="{{ route('game') }}" class="action-row primary">
                     <span class="action-icon">🎮</span>
                     <span>Start het spel!</span>
-                </button>
+                </a>
                 <button type="button" class="action-row secondary">
                     <span class="action-icon">?</span>
                     <span>Hoe werkt het?</span>
