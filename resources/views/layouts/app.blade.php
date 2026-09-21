@@ -21,7 +21,7 @@
                     <span class="nav-pill"><span class="nav-icon">🏠</span></span>
                     <span class="nav-label">Home</span>
                 </a>
-                <a href="{{ route('home') }}" class="nav-item {{ request()->routeIs('profiel') ? 'active' : '' }}">
+                <a href="{{ route('speluitleg') }}" class="nav-item {{ request()->routeIs('speluitleg') ? 'active' : '' }}">
                     <span class="nav-pill"><span class="nav-icon">🎮</span></span>
                     <span class="nav-label">Spel</span>
                 </a>

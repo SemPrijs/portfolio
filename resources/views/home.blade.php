@@ -32,10 +32,10 @@
                     <span class="action-icon">🎮</span>
                     <span>Start het spel!</span>
                 </button>
-                <button type="button" class="action-row secondary">
+                <a href="{{ route('speluitleg') }}" class="action-row secondary">
                     <span class="action-icon">?</span>
                     <span>Hoe werkt het?</span>
-                </button>
+                </a>
                 <button type="button" class="action-row secondary">
                     <span class="action-icon">📚</span>
                     <span>Leer over klimaat</span>
