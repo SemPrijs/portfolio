@@ -44,10 +44,10 @@
                     <span class="action-icon">🧭</span>
                     <span>Wat is het klimaatkampas?</span>
                 </button>
-                <button type="button" class="action-row secondary">
+                <a href="{{ route('over_ons') }}" class="action-row secondary">
                     <span class="action-icon">🏢</span>
                     <span>Over ons</span>
-                </button>
+                </a>
             </div>
 
             <div class="login-strip">
