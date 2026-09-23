@@ -27,6 +27,30 @@
                 <span class="action-icon">🎮</span>
                 <span>Start het spel!</span>
             </button>
+            <div class="action-stack">
+                <a href="{{ route('game') }}" class="action-row primary">
+                    <span class="action-icon">🎮</span>
+                    <span>Start het spel!</span>
+                </button>
+                <a href="{{ route('speluitleg') }}" class="action-row secondary">
+                </a>
+                <button type="button" class="action-row secondary">
+                    <span class="action-icon">?</span>
+                    <span>Hoe werkt het?</span>
+                </a>
+                <button type="button" class="action-row secondary">
+                    <span class="action-icon">📚</span>
+                    <span>Leer over klimaat</span>
+                </button>
+                <button type="button" class="action-row secondary">
+                    <span class="action-icon">🧭</span>
+                    <span>Wat is het klimaatkampas?</span>
+                </button>
+                <a href="{{ route('over_ons') }}" class="action-row secondary">
+                    <span class="action-icon">🏢</span>
+                    <span>Over ons</span>
+                </a>
+            </div>
 
             <button type="button" class="action-row secondary">
                 <span class="action-icon">?</span>
