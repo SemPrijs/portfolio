@@ -830,6 +830,8 @@ function saveScore() {
         trashBin.style.display = 'none';
     }
 
+}
+
 
     card.classList.remove('quiz-card');
 
