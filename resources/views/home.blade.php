@@ -38,7 +38,7 @@
                 <span>Hoe werkt het?</span>
             </button>
 
-            <button type="button" class="action-row secondary">
+            <button type="button" class="action-row secondar    y">
                 <span class="action-icon">📚</span>
                 <span>Leer over klimaat</span>
             </button>
