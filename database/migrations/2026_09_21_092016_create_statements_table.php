@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('statements', function (Blueprint $table) {
             $table->id();
             $table->text('text');
+            $table->integer('aantal_eens');
+            $table->integer('aantal_oneens');
             $table->timestamps();
         });
     }
