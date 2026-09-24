@@ -5,8 +5,8 @@ KliMaten is een telefoonvriendelijke website gebouwd met Laravel 11, Blade, Vite
 ## Benodigdheden
 
 - PHP 8.2 of hoger
-- Composer
-- Node.js en npm
+- Composer 2.2 of hoger
+- Node.js 18 of hoger en npm
 
 ## Project starten
 
@@ -24,7 +24,16 @@ KliMaten is een telefoonvriendelijke website gebouwd met Laravel 11, Blade, Vite
    php artisan key:generate
    ```
 
-3. Start de ontwikkelomgeving:
+3. Initialiseer de database en voer de seeders uit:
+
+   ```bash
+   php artisan migrate
+   php artisan db:seed
+   ```
+
+   De standaardconfiguratie gebruikt SQLite. Met `php artisan migrate --seed` kun je beide databasecommando's ook in één stap uitvoeren.
+
+4. Start de ontwikkelomgeving:
 
    ```bash
    composer run dev

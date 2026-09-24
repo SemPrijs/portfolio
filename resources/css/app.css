@@ -662,6 +662,128 @@ body {
   background: #f0f9ff;
 }
 
+.how-to-content {
+  width: min(100%, 720px);
+  margin: 0 auto;
+  padding: 14px clamp(14px, 4vw, 28px) 22px;
+  color: #164e63;
+}
+
+.how-to-intro {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  border: 1.5px solid #7dd3fc;
+  border-radius: 14px;
+  background: #e0f2fe;
+}
+
+.how-to-icon {
+  flex: 0 0 auto;
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.how-to-intro h2,
+.how-to-step h3 {
+  margin: 0;
+  color: #075985;
+  font-weight: 900;
+}
+
+.how-to-intro h2 {
+  font-size: clamp(1.05rem, 4vw, 1.4rem);
+}
+
+.how-to-intro p,
+.how-to-step p,
+.how-to-note p {
+  margin: 4px 0 0;
+  font-size: clamp(0.78rem, 2.5vw, 0.95rem);
+  line-height: 1.45;
+}
+
+.how-to-steps {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.how-to-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 12px;
+  border: 1.5px solid #bae6fd;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.how-to-number {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #0284c7;
+  color: #ffffff;
+  font-weight: 900;
+}
+
+.how-to-step h3 {
+  font-size: clamp(0.86rem, 3vw, 1rem);
+}
+
+.how-to-step p {
+  color: #164e63;
+}
+
+.how-to-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-top: 12px;
+  padding: 11px 13px;
+  border: 1.5px solid #fcd34d;
+  border-radius: 12px;
+  background: #fef9c3;
+  color: #713f12;
+}
+
+.how-to-note span {
+  font-size: 1.15rem;
+  line-height: 1.2;
+}
+
+.how-to-note p {
+  margin: 0;
+}
+
+.how-to-start {
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 14px;
+  border-radius: 999px;
+  background: #0284c7;
+  color: #ffffff;
+  font-weight: 900;
+  text-decoration: none;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.how-to-start:hover,
+.how-to-start:focus-visible {
+  background: #0369a1;
+  transform: translateY(-2px);
+}
+
 .nav-item {
   flex: 1;
   display: flex;
