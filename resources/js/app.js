@@ -926,7 +926,7 @@ function saveScore() {
         () => {
 
             window.location.href =
-                '/kieskompas';
+                '/klimaatkompas';
 
         }
     );
