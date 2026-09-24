@@ -62,4 +62,23 @@ class GameController extends Controller
                 : 'Helaas, dat antwoord is niet juist.',
         ]);
     }
+
+    public function saveScore(Request $request)
+{
+    $validated = $request->validate([
+        'activity_score' => ['required', 'integer'],
+        'priority_score' => ['required', 'integer'],
+    ]);
+
+    $user = auth()->user();
+
+    $user->update([
+        'activity_score' => $validated['activity_score'],
+        'priority_score' => $validated['priority_score'],
+    ]);
+
+    return response()->json([
+        'success' => true,
+    ]);
+}
 }
