@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home')->name('home');
+Route::view('/klimaatkompas', 'klimaatkompas');
 Route::view('/speluitleg', 'speluitleg')->name('speluitleg');
 Route::view('/leren', 'leren')->name('leren');
 Route::get('/leren/{topic}', function (string $topic) {
