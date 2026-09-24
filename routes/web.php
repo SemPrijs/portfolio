@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\AdminAccount;
+use App\Models\Statement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
@@ -110,8 +111,25 @@ Route::get('/admin', function (Request $request) {
 
 	return view('admin', [
 		'adminAccounts' => AdminAccount::orderBy('name')->get(),
+		'statements' => Statement::allOrdered(),
 	]);
 })->name('admin');
+
+Route::post('/admin/statements', function (Request $request) {
+	abort_unless($request->session()->get('is_admin'), 403);
+
+	$validated = $request->validate([
+		'text' => ['required', 'string', 'max:1000'],
+	]);
+
+	Statement::create([
+		'text' => $validated['text'],
+		'aantal_eens' => 0,
+		'aantal_oneens' => 0,
+	]);
+
+	return redirect()->route('admin')->with('success', 'Stelling toegevoegd.');
+})->name('admin.statements.store');
 
 Route::view('/over-ons', 'over_ons')->name('over_ons');
 Route::view('/game', 'game')->name('game');
