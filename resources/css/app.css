@@ -420,6 +420,7 @@ body {
     justify-content: center;
     padding: 24px 16px;
     background: #f0fdf4;
+}
 /* =========================
    LOGIN
    ========================= */
@@ -459,6 +460,7 @@ body {
     border-radius: 18px;
     background: #dcfce7;
     font-size: 32px;
+}
 
 /* =========================
    ADMIN LOGIN
@@ -771,6 +773,7 @@ body {
     color: #ffffff;
     box-shadow:
         0 4px 0 rgba(176, 96, 26, 0.72);
+}
 .nav-item:focus-visible {
   outline: 3px solid #fbbf24;
   outline-offset: -3px;
@@ -1256,6 +1259,7 @@ body {
     border-radius: 0;
     box-shadow: none;
   }
+}
 
 /* REGISTER BUTTON */
 
@@ -1512,6 +1516,7 @@ body {
     border-radius: 0;
     box-shadow: none;
   }
+}
 
 .speluitleg-content {
     background: #f0f9ff;
