@@ -98,13 +98,11 @@ body {
    ========================================================= */
 
 .hm-shell {
-    flex: 0 0 auto;
-    min-height: calc(100dvh - 116px);
-
-    display: flex;
-    flex-direction: column;
-
-    background: #dffae7;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: #dffae7;
 }
 
 .hm-header {
@@ -219,6 +217,7 @@ body {
     box-shadow: none;
 }
 
+/* =========================
 .kli-globe::before,
 .kli-globe::after {
     content: '';
@@ -260,15 +259,14 @@ body {
 }
 
 .hm-body {
-    flex: 1 1 auto;
-    min-height: auto;
-
-    display: flex;
-    flex-direction: column;
-
-    padding: 16px clamp(16px, 5vw, 28px) 12px;
-
-    background: #f0fdf4;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 16px clamp(16px, 5vw, 28px) 12px;
+  background: #f0fdf4;
+  color: #14532d;
 }
 
 
@@ -2365,6 +2363,11 @@ body {
 
         display: grid;
 
+  .hm-body {
+    min-height: 0;
+    justify-content: flex-start;
+    padding: 56px clamp(40px, 5vw, 84px);
+  }
         grid-template-columns:
             minmax(280px, 0.8fr)
             minmax(0, 1.2fr);
