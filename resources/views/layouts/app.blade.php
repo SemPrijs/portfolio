@@ -9,9 +9,7 @@
     <body>
         <div class="app-shell">
             <div class="status-bar top-gradient">
-                <span>9:41</span>
                 <span class="status-app-name">KliMaten</span>
-                <span>▪▪▪</span>
             </div>
 
             @yield('layout')
@@ -25,7 +23,7 @@
                     <span class="nav-pill"><span class="nav-icon">🎮</span></span>
                     <span class="nav-label">Spel</span>
                 </a>
-                <a href="{{ route('home') }}" class="nav-item">
+                <a href="{{ route('leren') }}" class="nav-item {{ request()->routeIs('leren') ? 'active' : '' }}">
                     <span class="nav-pill"><span class="nav-icon">📚</span></span>
                     <span class="nav-label">Leren</span>
                 </a>

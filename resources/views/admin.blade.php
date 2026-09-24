@@ -200,7 +200,6 @@
 <body>
     <div class="wireframe-phone">
         <div class="status-bar">
-            <span>9:41</span>
             <span>▣ ▣ ▣</span>
         </div>
 
@@ -222,19 +221,23 @@
                 <table class="admin-table">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Stelling</th>
-                            <th>Aantal Eens</th>
-                            <th>Aantal Oneens</th>
+                            <th>Naam</th>
+                            <th>E-mail</th>
+                            <th>Status</th>
+                            <th>Laatste login</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($users ?? [] as $user)
+                        @forelse($adminAccounts ?? [] as $admin)
                             <tr>
-                                <td>{{ $user->id }}</td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td><span class="status-badge">Actief</span></td>
+                                <td>{{ $admin->name }}</td>
+                                <td>{{ $admin->email }}</td>
+                                <td>
+                                    <span class="status-badge">
+                                        {{ $admin->is_active ? 'Actief' : 'Inactief' }}
+                                    </span>
+                                </td>
+                                <td>{{ $admin->last_login_at?->format('d-m-Y H:i') ?? 'Nog niet' }}</td>
                             </tr>
                         @empty
                             <tr>

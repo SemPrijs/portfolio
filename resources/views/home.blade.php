@@ -7,7 +7,12 @@
         <header class="hm-header">
             <div class="hm-header-top">
                 <div class="chip">🌱 Klimaat &amp; Duurzaamheid</div>
-                <div class="menu-dots">⋯</div>
+                <details class="home-menu">
+                    <summary class="menu-dots" aria-label="Open menu">⋯</summary>
+                    <div class="home-menu-dropdown">
+                        <a href="{{ route('admin.login') }}">Adminlogin</a>
+                    </div>
+                </details>
             </div>
 
             <div class="hm-title">
@@ -31,21 +36,15 @@
                 <a href="{{ route('game') }}" class="action-row primary">
                     <span class="action-icon">🎮</span>
                     <span>Start het spel!</span>
-                </button>
-                <a href="{{ route('speluitleg') }}" class="action-row secondary">
                 </a>
-                <button type="button" class="action-row secondary">
+                <a href="{{ route('speluitleg') }}" class="action-row secondary">
                     <span class="action-icon">?</span>
                     <span>Hoe werkt het?</span>
                 </a>
-                <button type="button" class="action-row secondary">
+                <a href="{{ route('leren') }}" class="action-row secondary">
                     <span class="action-icon">📚</span>
                     <span>Leer over klimaat</span>
-                </button>
-                <button type="button" class="action-row secondary">
-                    <span class="action-icon">🧭</span>
-                    <span>Wat is het klimaatkampas?</span>
-                </button>
+                </a>
                 <a href="{{ route('over_ons') }}" class="action-row secondary">
                     <span class="action-icon">🏢</span>
                     <span>Over ons</span>

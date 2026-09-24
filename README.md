@@ -32,6 +32,15 @@ KliMaten is een telefoonvriendelijke website gebouwd met Laravel 11, Blade, Vite
 
    De website is daarna beschikbaar op `http://localhost:8000`.
 
+## Adminlogin
+
+De seeder maakt standaard dit adminaccount aan:
+
+- E-mail: `admin@klimaten.nl`
+- Wachtwoord: `klimaten`
+
+Deze waarden kunnen lokaal worden aangepast met `ADMIN_EMAIL` en `ADMIN_PASSWORD` in `.env`.
+
 ## Controles voor een wijziging
 
 Voer voor het delen van werk minimaal deze controles uit:

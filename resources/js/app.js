@@ -22,6 +22,8 @@ const progress = document.getElementById('progress');
 const agreeButton = document.getElementById('agree-button');
 const disagreeButton = document.getElementById('disagree-button');
 
+if (!card || !statementText || !progress || !agreeButton || !disagreeButton) {
+} else {
 
 function showStatement() {
 
@@ -120,5 +122,7 @@ card.addEventListener('pointerup', (event) => {
         answer('disagree');
     }
 });
+
+}
 
 
