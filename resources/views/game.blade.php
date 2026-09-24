@@ -78,18 +78,18 @@
 
         <button
             type="button"
-            id="disagree-button"
-            class="game-button disagree"
-        >
-            👎 Oneens
-        </button>
-
-        <button
-            type="button"
             id="agree-button"
             class="game-button agree"
         >
             👍 Eens
+        </button>
+
+        <button
+            type="button"
+            id="disagree-button"
+            class="game-button disagree"
+        >
+            👎 Oneens
         </button>
 
     </div>

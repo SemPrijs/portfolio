@@ -1646,3 +1646,35 @@ body {
         );
     }
 }
+
+/* =========================================================
+   RESULT BUTTON
+   ========================================================= */
+
+.result-button {
+    display: block;
+    width: 100%;
+    max-width: 280px;
+    margin: 18px auto 0;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 999px;
+    background: #166534;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    transition:
+        transform 160ms ease,
+        background 160ms ease;
+}
+
+.result-button:hover {
+    transform: translateY(-2px);
+    background: #14532d;
+}
+
+.result-button:active {
+    transform: translateY(0);
+}

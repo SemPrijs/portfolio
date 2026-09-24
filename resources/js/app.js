@@ -1,26 +1,136 @@
 import './bootstrap';
 
+
+// ======================================================
+// STELLINGEN
+// ======================================================
+//
+// 10 stellingen voor ACTIVITEIT
+// 10 stellingen voor PRIORITEIT
+//
+// EENS   = +1 punt
+// ONEENS = -1 punt
+//
+
 const statements = [
-    'De overheid moet meer investeren in duurzame energie.',
-    'Iedereen zou minder vlees moeten eten om klimaatverandering tegen te gaan.',
-    'Elektrische auto’s zijn een goede oplossing voor het klimaat.',
-    'Vliegen moet duurder worden om klimaatverandering tegen te gaan.',
-    'Nederland moet sneller stoppen met het gebruik van fossiele brandstoffen.',
 
-    'Bedrijven moeten meer belasting betalen voor hun CO₂-uitstoot.',
-    'Windmolens moeten vaker worden gebouwd, ook als omwonenden daar last van hebben.',
-    'Iedereen zou zonnepanelen op zijn huis moeten hebben.',
-    'Openbaar vervoer moet goedkoper worden om autorijden te verminderen.',
-    'Klimaatbeleid moet vooral gericht zijn op grote bedrijven.',
+    // =========================
+    // ACTIVITEIT - 10 STELLINGEN
+    // =========================
 
-    'De overheid moet meer investeren in duurzame energie.',
-    'Iedereen zou minder vlees moeten eten om klimaatverandering tegen te gaan.',
-    'Elektrische auto’s zijn een goede oplossing voor het klimaat.',
-    'Vliegen moet duurder worden om klimaatverandering tegen te gaan.',
-    'Nederland moet sneller stoppen met het gebruik van fossiele brandstoffen.'
+    {
+        text: 'Ik probeer bewust mijn energieverbruik te verminderen.',
+        category: 'activity'
+    },
+
+    {
+        text: 'Ik gebruik zo vaak mogelijk de fiets of het openbaar vervoer.',
+        category: 'activity'
+    },
+
+    {
+        text: 'Ik probeer minder vlees te eten vanwege het klimaat.',
+        category: 'activity'
+    },
+
+    {
+        text: 'Ik probeer mijn woning zo energiezuinig mogelijk te maken.',
+        category: 'activity'
+    },
+
+    {
+        text: 'Ik let erop hoeveel energie mijn apparaten gebruiken.',
+        category: 'activity'
+    },
+
+    {
+        text: 'Ik probeer zo min mogelijk voedsel te verspillen.',
+        category: 'activity'
+    },
+
+    {
+        text: 'Ik koop regelmatig tweedehands producten om verspilling te verminderen.',
+        category: 'activity'
+    },
+
+    {
+        text: 'Ik probeer minder vaak het vliegtuig te nemen.',
+        category: 'activity'
+    },
+
+    {
+        text: 'Ik scheid mijn afval om grondstoffen opnieuw te kunnen gebruiken.',
+        category: 'activity'
+    },
+
+    {
+        text: 'Ik probeer in mijn dagelijks leven bewuste duurzame keuzes te maken.',
+        category: 'activity'
+    },
+
+
+    // =========================
+    // PRIORITEIT - 10 STELLINGEN
+    // =========================
+
+    {
+        text: 'Ik vind klimaatverandering een belangrijk probleem.',
+        category: 'priority'
+    },
+
+    {
+        text: 'Ik vind dat klimaatbeleid een hoge prioriteit moet hebben.',
+        category: 'priority'
+    },
+
+    {
+        text: 'Ik vind dat de overheid meer moet doen tegen klimaatverandering.',
+        category: 'priority'
+    },
+
+    {
+        text: 'Ik vind dat bedrijven meer verantwoordelijkheid moeten nemen voor hun CO₂-uitstoot.',
+        category: 'priority'
+    },
+
+    {
+        text: 'Ik vind dat Nederland sneller moet overstappen op duurzame energie.',
+        category: 'priority'
+    },
+
+    {
+        text: 'Ik vind dat klimaatbeleid belangrijker is dan economische groei op korte termijn.',
+        category: 'priority'
+    },
+
+    {
+        text: 'Ik vind dat duurzame keuzes voor iedereen makkelijker gemaakt moeten worden.',
+        category: 'priority'
+    },
+
+    {
+        text: 'Ik vind dat vervuilende producten en activiteiten zwaarder belast mogen worden.',
+        category: 'priority'
+    },
+
+    {
+        text: 'Ik vind dat de overheid meer moet investeren in openbaar vervoer.',
+        category: 'priority'
+    },
+
+    {
+        text: 'Ik vind dat klimaatbeleid een belangrijke rol moet spelen bij politieke keuzes.',
+        category: 'priority'
+    }
 ];
 
+
+// ======================================================
+// QUIZVRAGEN
+// ======================================================
+
 const quizQuestions = [
+
     {
         question: 'Welke energiebron is hernieuwbaar?',
         answers: [
@@ -78,40 +188,64 @@ const quizQuestions = [
 ];
 
 
+// ======================================================
+// SPELSTATUS
+// ======================================================
+
 let currentIndex = 0;
 let currentQuiz = 0;
+
 let quizMode = false;
 let quizAnswered = false;
 
 
-// =========================
+// ======================================================
+// SCORES
+// ======================================================
+
+let activityScore = 0;
+let priorityScore = 0;
+
+
+// ======================================================
 // ELEMENTEN
-// =========================
+// ======================================================
 
-const card = document.getElementById('statement-card');
-const statementText = document.getElementById('statement-text');
-const progress = document.getElementById('progress');
+const card =
+    document.getElementById('statement-card');
 
-const agreeButton = document.getElementById('agree-button');
-const disagreeButton = document.getElementById('disagree-button');
+const statementText =
+    document.getElementById('statement-text');
 
-const trashBin = document.getElementById('trash-bin');
-const agreeStack = document.querySelector('.agree-stack');
+const progress =
+    document.getElementById('progress');
+
+const agreeButton =
+    document.getElementById('agree-button');
+
+const disagreeButton =
+    document.getElementById('disagree-button');
+
+const trashBin =
+    document.getElementById('trash-bin');
+
+const agreeStack =
+    document.querySelector('.agree-stack');
 
 
-// =========================
+// ======================================================
 // ALLEEN OP GAME PAGINA
-// =========================
+// ======================================================
 
 if (card) {
 
-    // =========================
+
+    // ==================================================
     // QUIZKNOP MAKEN
-    // =========================
+    // ==================================================
 
     function createQuizNextButton() {
 
-        // Bestaat er al een knop?
         let nextButton =
             document.getElementById('quiz-next');
 
@@ -130,9 +264,7 @@ if (card) {
         nextButton.style.display = 'none';
 
 
-        // BELANGRIJK:
-        // De knop komt buiten de card,
-        // direct onder de card.
+        // Knop buiten de kaart plaatsen
         card.parentElement.appendChild(nextButton);
 
 
@@ -146,9 +278,9 @@ if (card) {
     }
 
 
-    // =========================
+    // ==================================================
     // QUIZKNOP VERWIJDEREN
-    // =========================
+    // ==================================================
 
     function removeQuizNextButton() {
 
@@ -161,16 +293,15 @@ if (card) {
     }
 
 
-    // =========================
+    // ==================================================
     // NORMALE STELLING TONEN
-    // =========================
+    // ==================================================
 
     function showStatement() {
 
         quizMode = false;
 
 
-        // Quizknop verwijderen
         removeQuizNextButton();
 
 
@@ -199,6 +330,7 @@ if (card) {
         disagreeButton.disabled = false;
 
 
+        // Geen stellingen meer?
         if (currentIndex >= statements.length) {
             showEnd();
             return;
@@ -206,7 +338,7 @@ if (card) {
 
 
         statementText.textContent =
-            statements[currentIndex];
+            statements[currentIndex].text;
 
 
         progress.textContent =
@@ -214,9 +346,9 @@ if (card) {
     }
 
 
-    // =========================
+    // ==================================================
     // QUIZ TONEN
-    // =========================
+    // ==================================================
 
     function showQuiz() {
 
@@ -230,25 +362,23 @@ if (card) {
         quizAnswered = false;
 
 
-        // =========================
-        // NORMALE UI VERBERGEN
-        // =========================
-
+        // Normale knoppen verbergen
         agreeButton.style.display = 'none';
         disagreeButton.style.display = 'none';
 
 
+        // Stapel verbergen
         if (agreeStack) {
             agreeStack.style.display = 'none';
         }
 
 
+        // Prullenbak verbergen
         if (trashBin) {
             trashBin.style.display = 'none';
         }
 
 
-        // Quizkaart
         card.classList.add('quiz-card');
 
 
@@ -264,11 +394,12 @@ if (card) {
         ];
 
 
-        // =========================
-        // QUIZ IN DE KAART
-        // =========================
+        // ==================================================
+        // QUIZ IN KAART
+        // ==================================================
 
         statementText.innerHTML = `
+
             <div class="quiz-content">
 
                 <div class="quiz-label">
@@ -282,11 +413,13 @@ if (card) {
                 <div class="quiz-answers">
 
                     ${quiz.answers.map((answer, index) => `
+
                         <button
                             type="button"
                             class="quiz-answer"
                             data-answer="${index}"
                         >
+
                             <span class="quiz-letter">
                                 ${letters[index]}
                             </span>
@@ -294,7 +427,9 @@ if (card) {
                             <span class="quiz-answer-text">
                                 ${answer}
                             </span>
+
                         </button>
+
                     `).join('')}
 
                 </div>
@@ -305,13 +440,13 @@ if (card) {
                 ></div>
 
             </div>
+
         `;
 
 
-        // =========================
-        // VERDER KNOP
-        // BUITEN DE KAART
-        // =========================
+        // ==================================================
+        // VERDER KNOP BUITEN KAART
+        // ==================================================
 
         const nextButton =
             createQuizNextButton();
@@ -321,9 +456,9 @@ if (card) {
             `Quiz ${currentQuiz + 1} / ${quizQuestions.length}`;
 
 
-        // =========================
+        // ==================================================
         // ANTWOORDKNOPPEN
-        // =========================
+        // ==================================================
 
         const quizButtons =
             card.querySelectorAll('.quiz-answer');
@@ -346,9 +481,9 @@ if (card) {
     }
 
 
-    // =========================
+    // ==================================================
     // QUIZ ANTWOORD CONTROLEREN
-    // =========================
+    // ==================================================
 
     function answerQuiz(selectedAnswer) {
 
@@ -382,9 +517,9 @@ if (card) {
         });
 
 
-        // =========================
+        // ==================================================
         // GOED ANTWOORD
-        // =========================
+        // ==================================================
 
         if (selectedAnswer === quiz.correct) {
 
@@ -403,9 +538,9 @@ if (card) {
         }
 
 
-        // =========================
+        // ==================================================
         // FOUT ANTWOORD
-        // =========================
+        // ==================================================
 
         else {
 
@@ -427,45 +562,55 @@ if (card) {
         }
 
 
-        // Verder-knop buiten de kaart tonen
+        // Verder-knop tonen
         if (nextButton) {
             nextButton.style.display = 'block';
         }
     }
 
 
-    // =========================
+    // ==================================================
     // VERDER NA QUIZ
-    // =========================
+    // ==================================================
 
     function nextAfterQuiz() {
 
         currentQuiz++;
 
 
-        // Quizknop verwijderen
         removeQuizNextButton();
 
 
-        // Quizstijl verwijderen
         card.classList.remove('quiz-card');
 
 
-        // Terug naar volgende stelling
+        // Als er nog stellingen zijn
         if (currentIndex < statements.length) {
 
             showStatement();
 
-        } else {
-
-            showEnd();
+            return;
         }
+
+
+        // Als alle stellingen klaar zijn,
+        // maar er zijn nog quizvragen
+        if (currentQuiz < quizQuestions.length) {
+
+            showQuiz();
+
+            return;
+        }
+
+
+        // Alles klaar
+        showEnd();
     }
 
 
-    // =========================
+    // ==================================================
     // STELLING BEANTWOORDEN
-    // =========================
+    // ==================================================
 
     function answer(answer) {
 
@@ -484,9 +629,39 @@ if (card) {
         }
 
 
-        // =========================
+        const currentStatement =
+            statements[currentIndex];
+
+
+        // ==================================================
+        // SCORE BIJWERKEN
+        // ==================================================
+
+        if (currentStatement.category === 'activity') {
+
+            if (answer === 'agree') {
+                activityScore++;
+            } else {
+                activityScore--;
+            }
+
+        }
+
+
+        if (currentStatement.category === 'priority') {
+
+            if (answer === 'agree') {
+                priorityScore++;
+            } else {
+                priorityScore--;
+            }
+
+        }
+
+
+        // ==================================================
         // EENS
-        // =========================
+        // ==================================================
 
         if (answer === 'agree') {
 
@@ -511,9 +686,9 @@ if (card) {
         }
 
 
-        // =========================
+        // ==================================================
         // ONEENS
-        // =========================
+        // ==================================================
 
         else {
 
@@ -538,9 +713,9 @@ if (card) {
         }
 
 
-        // =========================
+        // ==================================================
         // VOLGENDE STELLING
-        // =========================
+        // ==================================================
 
         setTimeout(() => {
 
@@ -556,7 +731,7 @@ if (card) {
             );
 
 
-            // Na iedere 5 stellingen quiz
+            // Na iedere 5 stellingen een quiz
             if (
                 currentIndex % 5 === 0 &&
                 currentQuiz < quizQuestions.length
@@ -567,69 +742,169 @@ if (card) {
             } else {
 
                 showStatement();
+
             }
 
         }, 500);
     }
 
 
-    // =========================
+    // ==================================================
     // EINDE
-    // =========================
+    // ==================================================
 
     function showEnd() {
 
-        quizMode = true;
+    quizMode = true;
+
+    removeQuizNextButton();
 
 
-        removeQuizNextButton();
+    // Knoppen verbergen
+    agreeButton.style.display = 'none';
+    disagreeButton.style.display = 'none';
 
 
-        agreeButton.style.display = 'none';
-        disagreeButton.style.display = 'none';
-
-
-        if (agreeStack) {
-            agreeStack.style.display = 'none';
-        }
-
-
-        if (trashBin) {
-            trashBin.style.display = 'none';
-        }
-
-
-        card.classList.remove('quiz-card');
-
-
-        statementText.innerHTML = `
-            <div class="game-finished">
-
-                <div class="finished-icon">
-                    🎉
-                </div>
-
-                <h2>
-                    Je bent klaar!
-                </h2>
-
-                <p>
-                    Je hebt alle 15 stellingen
-                    en de quizvragen beantwoord.
-                </p>
-
-            </div>
-        `;
-
-
-        progress.textContent =
-            'Klaar!';
+    if (agreeStack) {
+        agreeStack.style.display = 'none';
     }
 
 
-    // =========================
+    if (trashBin) {
+        trashBin.style.display = 'none';
+    }
+
+
+    card.classList.remove('quiz-card');
+
+
+    // Oude resultaatknop verwijderen
+    const oldResultButton =
+        document.getElementById('result-button');
+
+    if (oldResultButton) {
+        oldResultButton.remove();
+    }
+
+
+    // ==================================================
+    // RESULTAAT IN DE CARD
+    // ==================================================
+
+    statementText.innerHTML = `
+
+        <div class="game-finished">
+
+            <div class="finished-icon">
+                🎉
+            </div>
+
+            <h2>
+                Je bent klaar!
+            </h2>
+
+            <p>
+                Dit is jouw resultaat:
+            </p>
+
+
+            <div class="score-results">
+
+                <div class="score-item">
+
+                    <span class="score-label">
+                        ACTIVITEIT
+                    </span>
+
+                    <strong class="score-value">
+                        ${formatScore(activityScore)}
+                    </strong>
+
+                    <span class="score-range">
+                        van -10 tot +10
+                    </span>
+
+                </div>
+
+
+                <div class="score-item">
+
+                    <span class="score-label">
+                        PRIORITEIT
+                    </span>
+
+                    <strong class="score-value">
+                        ${formatScore(priorityScore)}
+                    </strong>
+
+                    <span class="score-range">
+                        van -10 tot +10
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    // ==================================================
+    // KNOP ONDER DE CARD
+    // ==================================================
+
+    const resultButton =
+        document.createElement('button');
+
+    resultButton.type = 'button';
+    resultButton.id = 'result-button';
+    resultButton.className = 'result-button';
+
+    resultButton.textContent =
+        'Naar kieskompas →';
+
+
+    resultButton.addEventListener(
+        'click',
+        () => {
+
+            window.location.href =
+                '/kieskompas';
+
+        }
+    );
+
+
+    // Plaats de knop DIRECT onder de card
+    card.insertAdjacentElement(
+        'afterend',
+        resultButton
+    );
+
+
+    progress.textContent =
+        'Klaar!';
+}
+
+
+    // ==================================================
+    // SCORE OPMAKEN
+    // ==================================================
+
+    function formatScore(score) {
+
+        if (score > 0) {
+            return `+${score}`;
+        }
+
+        return score;
+    }
+
+
+    // ==================================================
     // EENS / ONEENS KNOPPEN
-    // =========================
+    // ==================================================
 
     agreeButton.addEventListener(
         'click',
@@ -643,9 +918,9 @@ if (card) {
     );
 
 
-    // =========================
+    // ==================================================
     // SWIPE
-    // =========================
+    // ==================================================
 
     let startY = 0;
     let startX = 0;
@@ -713,13 +988,15 @@ if (card) {
             if (differenceY < -100) {
                 answer('disagree');
             }
+
         }
     );
 
 
-    // =========================
+    // ==================================================
     // START
-    // =========================
+    // ==================================================
 
     showStatement();
 }
+
