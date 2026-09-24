@@ -47,18 +47,10 @@ body {
 .app-shell {
   width: min(100%, 480px);
   min-height: 100dvh;
-  height: auto;
   background: #dffae7;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-    width: 390px;
-    height: 844px;
-    background: #dffae7;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
 }
 
 
@@ -78,15 +70,6 @@ body {
   font-size: 12px;
   color: #fff;
   background: rgba(10, 10, 12, 0.92);
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 18px;
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: #fff;
-    background: rgba(10, 10, 12, 0.92);
 }
 
 .status-bar .status-app-name {
@@ -121,8 +104,7 @@ body {
    ========================= */
 
 .hm-shell {
-  flex: 0 0 auto;
-  min-height: calc(100dvh - 116px);
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   background: #dffae7;
@@ -132,21 +114,6 @@ body {
   padding: 20px clamp(16px, 5vw, 28px) 22px;
   background: linear-gradient(160deg, #166534 0%, #15803d 40%, #0d9488 100%);
   color: #fff;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background: #dffae7;
-}
-
-.hm-header {
-    padding: 18px 20px 20px;
-    background: linear-gradient(
-        160deg,
-        #166534 0%,
-        #15803d 40%,
-        #0d9488 100%
-    );
-    color: #fff;
 }
 
 .hm-header-top {
@@ -181,11 +148,7 @@ body {
   font-size: clamp(32px, 9vw, 42px);
   line-height: 1;
   font-weight: 900;
-    margin: 0;
-    font-size: 36px;
-    line-height: 1;
-    font-weight: 900;
-    letter-spacing: -0.03em;
+  letter-spacing: -0.03em;
 }
 
 
@@ -248,21 +211,11 @@ body {
 
 .hm-body {
   flex: 1 1 auto;
-  min-height: auto;
   display: flex;
   flex-direction: column;
   padding: 16px clamp(16px, 5vw, 28px) 12px;
   background: #f0fdf4;
-    margin: 6px 0 0;
-    font-size: 13px;
-    line-height: 1.5;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.94);
-}
-
-.hm-body {
-    padding: 10px 16px 0;
-    background: #f0fdf4;
+  color: #14532d;
 }
 
 
@@ -328,8 +281,8 @@ body {
   justify-content: center;
   gap: 10px;
   padding: 0 18px;
-  border: 2px solid #166534;
-  background: #ffffff;
+  border: 2px solid rgba(22, 101, 52, 0.22);
+  background: rgba(255, 255, 255, 0.92);
   color: #14532d;
   font-size: 1rem;
   font-weight: 800;
@@ -347,41 +300,8 @@ body {
 }
 
 .action-row:focus-visible {
-  outline: 4px solid #b45309;
+  outline: 3px solid #f59e0b;
   outline-offset: 3px;
-    width: 100%;
-    min-height: 43px;
-    border-radius: 999px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 0 18px;
-    border: 2px solid rgba(22, 101, 52, 0.22);
-    background: rgba(255, 255, 255, 0.28);
-    color: #166534;
-    font-size: 14px;
-    font-weight: 800;
-    font-family: inherit;
-    cursor: pointer;
-    text-decoration: none;
-    transition:
-        transform 160ms ease,
-        background 160ms ease,
-        border-color 160ms ease,
-        box-shadow 160ms ease;
-}
-
-.action-row:hover {
-    transform: translateY(-2px);
-    background: rgba(255, 255, 255, 0.72);
-    border-color: #22c55e;
-    box-shadow: 0 5px 12px rgba(22, 101, 52, 0.16);
-}
-
-.action-row:focus-visible {
-    outline: 3px solid #f59e0b;
-    outline-offset: 3px;
 }
 
 .action-row:active {
@@ -412,8 +332,7 @@ body {
 }
 
 .action-row.secondary {
-  background: #ffffff;
-    background: rgba(255, 255, 255, 0.36);
+    background: rgba(255, 255, 255, 0.92);
 }
 
 .action-icon {
@@ -436,15 +355,6 @@ body {
   color: #14532d;
   font-weight: 700;
   opacity: 0.92;
-    margin-top: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    font-size: 11px;
-    color: #166534;
-    font-weight: 700;
-    opacity: 0.92;
 }
 
 .login-strip .spark {
@@ -464,11 +374,6 @@ body {
   align-items: center;
   justify-content: space-around;
   border-top: 2px solid rgba(255,255,255,0.15);
-    height: 68px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    border-top: 2px solid rgba(255, 255, 255, 0.15);
 }
 
 .screen-shell {
@@ -539,23 +444,8 @@ body {
   border: none;
   background: none;
   cursor: pointer;
-  color: #d1fae5;
+  color: rgba(255, 255, 255, 0.6);
   transition: color 160ms ease, background 160ms ease, transform 160ms ease;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    text-decoration: none;
-    border: none;
-    background: none;
-    cursor: pointer;
-    color: rgba(255, 255, 255, 0.6);
-    transition:
-        color 160ms ease,
-        background 160ms ease,
-        transform 160ms ease;
 }
 
 .nav-item:hover {
@@ -567,8 +457,6 @@ body {
 .nav-item:focus-visible {
   outline: 3px solid #fbbf24;
   outline-offset: -3px;
-    outline: 2px solid #fbbf24;
-    outline-offset: -3px;
 }
 
 .nav-item.active {

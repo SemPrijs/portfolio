@@ -3,8 +3,6 @@
 @section('title', 'KlimaatKompas')
 
 @section('layout')
-
-```
 <div class="hm-shell">
     <header class="hm-header">
         <div class="hm-header-top">
@@ -227,6 +225,4 @@
         opacity: 0.65;
     }
 </style>
-```
-
 @endsection
