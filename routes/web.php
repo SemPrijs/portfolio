@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\GameController;
 
 Route::view('/', 'home')->name('home');
 
@@ -20,3 +21,7 @@ Route::post('/register', [RegisterController::class, 'register'])
     ->name('register.store');
 
 Route::view('/game', 'game')->name('game');
+
+Route::post('/game/save-score', [GameController::class, 'saveScore'])
+    ->middleware('auth')
+    ->name('game.save-score');

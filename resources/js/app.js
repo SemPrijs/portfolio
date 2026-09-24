@@ -748,6 +748,59 @@ if (card) {
         }, 500);
     }
 
+    // ======================================================
+// SCORE OPSLAAN
+// ======================================================
+
+function saveScore() {
+
+    const csrfToken =
+        document.querySelector('meta[name="csrf-token"]')
+            ?.getAttribute('content');
+
+    if (!csrfToken) {
+        console.error('CSRF-token niet gevonden.');
+        return;
+    }
+
+    fetch('/game/save-score', {
+        method: 'POST',
+
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+        },
+
+        body: JSON.stringify({
+            activity_score: activityScore,
+            priority_score: priorityScore,
+        }),
+    })
+    .then(response => {
+
+        if (!response.ok) {
+            throw new Error(
+                `Score opslaan mislukt: ${response.status}`
+            );
+        }
+
+        return response.json();
+    })
+    .then(data => {
+
+        console.log('Score opgeslagen:', data);
+
+    })
+    .catch(error => {
+
+        console.error(
+            'De score kon niet worden opgeslagen:',
+            error
+        );
+
+    });
+}
 
     // ==================================================
     // EINDE
@@ -756,6 +809,9 @@ if (card) {
     function showEnd() {
 
     quizMode = true;
+
+    // Score opslaan voor ingelogde gebruiker
+    saveScore();
 
     removeQuizNextButton();
 
