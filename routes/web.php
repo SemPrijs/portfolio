@@ -9,7 +9,12 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\GameController;
 
 Route::view('/', 'home')->name('home');
-Route::view('/klimaatkompas', 'klimaatkompas');
+Route::get('/klimaatkompas', function (Request $request) {
+	return view('klimaatkompas', [
+		'priority' => $request->session()->get('priority_score', 0),
+		'activity' => $request->session()->get('activity_score', 0),
+	]);
+})->name('klimaatkompas');
 Route::view('/speluitleg', 'speluitleg')->name('speluitleg');
 Route::view('/leren', 'leren')->name('leren');
 Route::get('/leren/{topic}', function (string $topic) {
@@ -146,5 +151,4 @@ Route::post('/register', [RegisterController::class, 'register'])
 Route::view('/game', 'game')->name('game');
 
 Route::post('/game/save-score', [GameController::class, 'saveScore'])
-    ->middleware('auth')
     ->name('game.save-score');

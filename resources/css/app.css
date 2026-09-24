@@ -1299,6 +1299,26 @@ body {
     transform: translateY(1px);
 }
 
+.register-skip-link {
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    border: 2px solid #86efac;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #166534;
+    font-weight: 900;
+    text-decoration: none;
+}
+
+.register-skip-link:hover,
+.register-skip-link:focus-visible {
+    background: #ecfdf5;
+    border-color: #22c55e;
+}
+
 
 /* =========================================================
    MOBILE

@@ -33,7 +33,7 @@
         </div>
 
         <div class="action-stack">
-            <a href="{{ route('game') }}" class="action-row primary">
+            <a href="{{ route('register') }}" class="action-row primary">
                 <span class="action-icon">🎮</span>
                 <span>Start het spel!</span>
             </a>

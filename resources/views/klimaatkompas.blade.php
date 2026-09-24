@@ -23,12 +23,6 @@
 
     <main class="hm-body">
 
-        {{-- Tijdelijke aanpasbare testdata --}}
-        @php
-            $priority = -50;
-            $activity = -70;
-        @endphp
-
         <div class="climate-compass">
 
             <div class="compass-title top">
