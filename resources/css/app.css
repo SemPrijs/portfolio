@@ -370,32 +370,307 @@ body {
     font-size: 16px;
 }
 
-
 /* =========================================================
-   LOGIN
+   GAME START
    ========================================================= */
 
-.login-strip {
-    margin-top: auto;
-    padding-top: 14px;
-
+.game-start-page {
+    flex: 1;
+    min-height: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 24px 16px;
+    background: #f0fdf4;
+}
 
-    gap: 7px;
+.game-start-card {
+    width: 100%;
+    max-width: 520px;
+    padding: 32px 24px;
+    text-align: center;
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.06),
+        0 15px 35px rgba(22, 101, 52, 0.10);
+}
 
-    font-size: 0.875rem;
+.game-start-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    background: #dcfce7;
+    font-size: 32px;
+}
+
+.game-start-card h1 {
+    margin: 0 0 10px;
     color: #14532d;
-    font-weight: 700;
-
-    opacity: 0.92;
+    font-size: 30px;
+    line-height: 1.15;
+    font-weight: 900;
 }
 
-.login-strip .spark {
+.game-start-card p {
+    margin: 0;
+    color: #26352b;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.game-start-info {
+    margin-top: 6px !important;
+    color: #64748b !important;
+    font-size: 14px !important;
+}
+
+.game-start-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 26px;
+}
+
+.game-start-button {
+    width: 100%;
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 20px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 900;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        transform 160ms ease,
+        background 160ms ease,
+        box-shadow 160ms ease;
+}
+
+.game-start-button:hover {
+    transform: translateY(-2px);
+}
+
+.game-start-button.primary {
+    background: linear-gradient(
+        135deg,
+        #f7a84a 0%,
+        #ee7b3d 100%
+    );
+    color: #ffffff;
+    box-shadow:
+        0 4px 0 rgba(176, 96, 26, 0.72);
+}
+
+.game-start-button.primary:hover {
+    background: linear-gradient(
+        135deg,
+        #ffb45a 0%,
+        #f34f3d 100%
+    );
+}
+
+.game-start-button.secondary {
+    background: #ffffff;
+    color: #166534;
+    border: 2px solid #86efac;
+}
+
+.game-start-button.secondary:hover {
+    background: #ecfdf5;
+}
+
+
+/* =========================================================
+   REGISTER
+   ========================================================= */
+
+.register-page {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    background: #f0fdf4;
+}
+
+.register-card {
+    width: 100%;
+    max-width: 520px;
+    padding: 32px 24px;
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.06),
+        0 15px 35px rgba(22, 101, 52, 0.10);
+}
+
+.register-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    background: #dcfce7;
+    font-size: 30px;
+}
+
+.register-card h1 {
+    margin: 0 0 10px;
+    text-align: center;
+    color: #14532d;
+    font-size: 30px;
+    line-height: 1.15;
+    font-weight: 900;
+}
+
+.register-intro {
+    margin: 0 0 24px;
+    text-align: center;
+    color: #64748b;
     font-size: 14px;
+    line-height: 1.5;
 }
 
+
+/* FORMULIER */
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    color: #14532d;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.form-group input {
+    width: 100%;
+    min-height: 48px;
+    padding: 11px 14px;
+    border: 2px solid #d1d5db;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #26352b;
+    font-family: inherit;
+    font-size: 15px;
+    outline: none;
+    transition:
+        border-color 160ms ease,
+        box-shadow 160ms ease;
+}
+
+.form-group input:focus {
+    border-color: #22c55e;
+    box-shadow:
+        0 0 0 3px rgba(34, 197, 94, 0.12);
+}
+
+.form-error {
+    display: block;
+    margin-top: 6px;
+    color: #dc2626;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+
+/* REGISTER BUTTON */
+
+.register-button {
+    width: 100%;
+    min-height: 52px;
+    margin-top: 8px;
+    padding: 13px 20px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(
+        135deg,
+        #f7a84a 0%,
+        #ee7b3d 100%
+    );
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow:
+        0 4px 0 rgba(176, 96, 26, 0.72);
+    transition:
+        transform 160ms ease,
+        background 160ms ease,
+        box-shadow 160ms ease;
+}
+
+.register-button:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(
+        135deg,
+        #ffb45a 0%,
+        #f34f3d 100%
+    );
+}
+
+.register-button:active {
+    transform: translateY(1px);
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    .game-start-page,
+    .register-page {
+        padding: 18px 12px;
+    }
+
+    .game-start-card,
+    .register-card {
+        padding: 26px 18px;
+        border-radius: 20px;
+    }
+
+    .game-start-card h1,
+    .register-card h1 {
+        font-size: 26px;
+    }
+}
+
+
+/* =========================================================
+   DESKTOP
+   ========================================================= */
+
+@media (min-width: 700px) {
+
+    .game-start-page,
+    .register-page {
+        padding: 40px;
+    }
+
+    .game-start-card,
+    .register-card {
+        padding: 40px;
+    }
+
+}
 
 /* =========================================================
    BOTTOM NAV
