@@ -9,7 +9,12 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\GameController;
 
 Route::view('/', 'home')->name('home');
-Route::view('/klimaatkompas', 'klimaatkompas');
+Route::get('/klimaatkompas', function (Request $request) {
+	return view('klimaatkompas', [
+		'priority' => $request->session()->get('priority_score', 0),
+		'activity' => $request->session()->get('activity_score', 0),
+	]);
+})->name('klimaatkompas');
 Route::view('/speluitleg', 'speluitleg')->name('speluitleg');
 Route::view('/leren', 'leren')->name('leren');
 Route::get('/leren/{topic}', function (string $topic) {
@@ -100,14 +105,6 @@ Route::post('/admin/login', function (Request $request) {
 	return back()->withErrors(['email' => 'De ingevulde admingegevens zijn niet juist.']);
 })->name('admin.login.submit');
 
-Route::post('/admin/logout', function (Request $request) {
-	$request->session()->forget('is_admin');
-	$request->session()->invalidate();
-	$request->session()->regenerateToken();
-
-	return redirect()->route('home');
-})->name('admin.logout');
-
 Route::get('/admin', function (Request $request) {
 	abort_unless($request->session()->get('is_admin'), 403);
 
@@ -146,5 +143,4 @@ Route::post('/register', [RegisterController::class, 'register'])
 Route::view('/game', 'game')->name('game');
 
 Route::post('/game/save-score', [GameController::class, 'saveScore'])
-    ->middleware('auth')
     ->name('game.save-score');

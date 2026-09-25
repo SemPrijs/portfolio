@@ -966,8 +966,9 @@ body {
 
 .topics-prompt {
   margin: 10px 0 8px;
-  font-size: 0.73rem;
-  font-weight: 900;
+    font-size: 0.86rem;
+    line-height: 1.4;
+    font-weight: 800;
 }
 
 .topics-grid {
@@ -1297,6 +1298,26 @@ body {
 
 .register-button:active {
     transform: translateY(1px);
+}
+
+.register-skip-link {
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    border: 2px solid #86efac;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #166534;
+    font-weight: 900;
+    text-decoration: none;
+}
+
+.register-skip-link:hover,
+.register-skip-link:focus-visible {
+    background: #ecfdf5;
+    border-color: #22c55e;
 }
 
 
@@ -2647,12 +2668,30 @@ body {
 .admin-page,
 .about-page {
     flex: 1 1 auto;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     gap: 18px;
     padding: 18px 16px 20px;
-  background: #f0fdf4;
+    background: #f0fdf4;
     width: 100%;
+}
+
+.about-page {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.about-page .about-back {
+    margin-bottom: 14px;
+    color: #166534;
+    border-color: #86efac;
+    background: #dcfce7;
+}
+
+.about-page .about-back:hover,
+.about-page .about-back:focus-visible {
+    background: #bbf7d0;
 }
 
 /* Dark theme specifically for admin page */

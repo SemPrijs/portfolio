@@ -6,6 +6,7 @@
 <div class="hm-shell">
     <header class="hm-header">
         <div class="hm-header-top">
+            <a href="{{ route('home') }}" class="topics-back" aria-label="Terug naar home">←</a>
             <div class="chip">🧭 KlimaatKompas</div>
             <div class="menu-dots">⋯</div>
         </div>
@@ -22,12 +23,6 @@
     </header>
 
     <main class="hm-body">
-
-        {{-- Tijdelijke aanpasbare testdata --}}
-        @php
-            $priority = -50;
-            $activity = -70;
-        @endphp
 
         <div class="climate-compass">
 
