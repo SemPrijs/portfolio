@@ -12,9 +12,38 @@ class GameController extends Controller
     public function index()
     {
         $statements = Statement::inRandomOrder()
-            ->get(['id', 'text']);
+            ->get([
+                'id',
+                'text',
+                'category',
+            ]);
 
-        return view('game', compact('statements'));
+        $quizQuestions = QuizQuestion::inRandomOrder()
+            ->get()
+            ->map(function ($quiz) {
+                return [
+                    'id' => $quiz->id,
+                    'question' => $quiz->question,
+                    'answers' => [
+                        $quiz->answer_a,
+                        $quiz->answer_b,
+                        $quiz->answer_c,
+                        $quiz->answer_d,
+                    ],
+                    'correct' => match ($quiz->correct_answer) {
+                        'a' => 0,
+                        'b' => 1,
+                        'c' => 2,
+                        'd' => 3,
+                        default => null,
+                    },
+                ];
+            });
+
+        return view('game', compact(
+            'statements',
+            'quizQuestions'
+        ));
     }
 
     public function statement(Request $request)
@@ -64,19 +93,19 @@ class GameController extends Controller
     }
 
     public function saveScore(Request $request)
-{
-    $validated = $request->validate([
-        'activity_score' => ['required', 'integer'],
-        'priority_score' => ['required', 'integer'],
-    ]);
+    {
+        $validated = $request->validate([
+            'activity_score' => ['required', 'integer'],
+            'priority_score' => ['required', 'integer'],
+        ]);
 
-    $request->session()->put([
-        'activity_score' => $validated['activity_score'],
-        'priority_score' => $validated['priority_score'],
-    ]);
+        $request->session()->put([
+            'activity_score' => $validated['activity_score'],
+            'priority_score' => $validated['priority_score'],
+        ]);
 
-    return response()->json([
-        'success' => true,
-    ]);
-}
+        return response()->json([
+            'success' => true,
+        ]);
+    }
 }
