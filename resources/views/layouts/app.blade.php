@@ -21,7 +21,7 @@
                     <span class="nav-label">Home</span>
                 </a>
                 <a href="{{ route('speluitleg') }}" class="nav-item {{ request()->routeIs('speluitleg') ? 'active' : '' }}">
-                    <span class="nav-pill"><span class="nav-icon">🎮</span></span>
+                    <span class="nav-pill"><span class="nav-icon">?</span></span>
                     <span class="nav-label">SpelUitleg</span>
                 </a>
                 <a href="{{ route('leren') }}" class="nav-item {{ request()->routeIs('leren') ? 'active' : '' }}">
@@ -31,6 +31,10 @@
                 <a href="{{ url('/klimaatkompas') }}" class="nav-item">
                     <span class="nav-pill"><span class="nav-icon">🧭</span></span>
                     <span class="nav-label">Kompas</span>
+                </a>
+                    <a href="{{ url('/over-ons') }}" class="nav-item">
+                    <span class="nav-pill"><span class="nav-icon">🏢</span></span>
+                    <span class="nav-label">Over Ons</span>
                 </a>
             </nav>
         </div>

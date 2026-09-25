@@ -41,11 +41,18 @@
                             <p>Je kunt ook omhoog swipen voor <strong>Eens</strong> en omlaag voor <strong>Oneens</strong>.</p>
                         </div>
                     </li>
+                                        <li class="how-to-step">
+                        <span class="how-to-number">4</span>
+                        <div>
+                            <h3>Beantwoord de quizvragen</h3>
+                            <p>Beantwoord ook om de 5 stellingen een quizvraag om je kennis te testen</p>
+                        </div>
+                    </li>
                 </ol>
 
                 <aside class="how-to-note">
                     <span aria-hidden="true">💡</span>
-                    <p>Na elke keuze krijg je een nieuwe stelling. Aan het einde heb je alle 10 stellingen beantwoord.</p>
+                    <p>Na elke keuze krijg je een nieuwe stelling. Aan het einde heb je alle 20 stellingen beantwoord.</p>
                 </aside>
 
                 <a href="{{ route('game') }}" class="how-to-start">🎮 Start het spel</a>

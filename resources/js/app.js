@@ -8,8 +8,8 @@ import './bootstrap';
 // 10 stellingen voor ACTIVITEIT
 // 10 stellingen voor PRIORITEIT
 //
-// EENS   = +1 punt
-// ONEENS = -1 punt
+// EENS   = +10 punten
+// ONEENS = -10 punten
 //
 
 const statements = [
@@ -205,6 +205,7 @@ let quizAnswered = false;
 
 let activityScore = 0;
 let priorityScore = 0;
+const pointsPerStatement = 10;
 
 
 // ======================================================
@@ -640,9 +641,9 @@ if (card) {
         if (currentStatement.category === 'activity') {
 
             if (answer === 'agree') {
-                activityScore++;
+                activityScore += pointsPerStatement;
             } else {
-                activityScore--;
+                activityScore -= pointsPerStatement;
             }
 
         }
@@ -651,9 +652,9 @@ if (card) {
         if (currentStatement.category === 'priority') {
 
             if (answer === 'agree') {
-                priorityScore++;
+                priorityScore += pointsPerStatement;
             } else {
-                priorityScore--;
+                priorityScore -= pointsPerStatement;
             }
 
         }
@@ -877,7 +878,7 @@ function saveScore() {
                     </strong>
 
                     <span class="score-range">
-                        van -10 tot +10
+                        van -100 tot +100
                     </span>
 
                 </div>
@@ -894,7 +895,7 @@ function saveScore() {
                     </strong>
 
                     <span class="score-range">
-                        van -10 tot +10
+                        van -100 tot +100
                     </span>
 
                 </div>
@@ -926,7 +927,7 @@ function saveScore() {
         () => {
 
             window.location.href =
-                '/kieskompas';
+                '/klimaatkompas';
 
         }
     );

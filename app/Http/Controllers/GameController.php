@@ -70,9 +70,7 @@ class GameController extends Controller
         'priority_score' => ['required', 'integer'],
     ]);
 
-    $user = auth()->user();
-
-    $user->update([
+    $request->session()->put([
         'activity_score' => $validated['activity_score'],
         'priority_score' => $validated['priority_score'],
     ]);

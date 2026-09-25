@@ -87,6 +87,10 @@
 
         </form>
 
+        <a href="{{ route('game') }}" class="register-skip-link">
+            Ga verder zonder account
+        </a>
+
     </div>
 
 </div>

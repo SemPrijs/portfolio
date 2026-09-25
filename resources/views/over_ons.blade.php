@@ -12,6 +12,8 @@
 
 @section('layout')
     <main class="about-page">
+        <a href="{{ route('home') }}" class="topics-back about-back" aria-label="Terug naar home">←</a>
+
         <section class="about-card">
             <span class="chip">Ons verhaal</span>
             <h2 class="page-title">Wij bouwen aan een duurzamere toekomst.</h2>
@@ -47,7 +49,6 @@
 
             <div class="cta-row">
                 <a class="btn-cta" href="mailto:info@klimaten.nl">✉️ Contact opnemen</a>
-                <a class="btn-outline" href="{{ route('home') }}">🏠 Terug naar home</a>
             </div>
         </section>
     </main>
@@ -65,7 +66,7 @@
     * { box-sizing: border-box; }
 
     body {
-        background: #0f172a;
+        background: #f0fdf4;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -78,12 +79,19 @@
         width: 100%;
         background: #f0fdf4;
         border-radius: 24px;
-        overflow: hidden;
-        box-shadow:
-            0 0 0 7px #0f172a,
-            0 0 0 9px #1e3a5f,
-            0 32px 80px rgba(0,0,0,0.7);
         padding: 24px;
+    }
+
+    .about-back {
+        margin-bottom: 14px;
+        color: #166534;
+        border-color: #86efac;
+        background: #dcfce7;
+    }
+
+    .about-back:hover,
+    .about-back:focus-visible {
+        background: #bbf7d0;
     }
 
     .about-card {
