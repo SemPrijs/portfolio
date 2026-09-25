@@ -105,14 +105,6 @@ Route::post('/admin/login', function (Request $request) {
 	return back()->withErrors(['email' => 'De ingevulde admingegevens zijn niet juist.']);
 })->name('admin.login.submit');
 
-Route::post('/admin/logout', function (Request $request) {
-	$request->session()->forget('is_admin');
-	$request->session()->invalidate();
-	$request->session()->regenerateToken();
-
-	return redirect()->route('home');
-})->name('admin.logout');
-
 Route::get('/admin', function (Request $request) {
 	abort_unless($request->session()->get('is_admin'), 403);
 

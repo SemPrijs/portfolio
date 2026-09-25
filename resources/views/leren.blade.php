@@ -11,12 +11,8 @@
         </header>
 
         <main class="topics-content">
-            <label class="topics-search">
-                <span aria-hidden="true">🔍</span>
-                <input type="search" placeholder="Zoek een onderwerp..." aria-label="Zoek een onderwerp">
-            </label>
 
-            <p class="topics-prompt">Kies een onderwerp om meer te leren 👇</p>
+            <p class="topics-prompt">Kies een onderwerp om meer over te leren 👇</p>
 
             <div class="topics-grid">
                 <a href="{{ route('leren.topic', 'klimaatverandering') }}" class="topic-card topic-orange">
