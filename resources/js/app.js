@@ -14,6 +14,8 @@ let currentQuiz = 0;
 let quizMode = false;
 let quizAnswered = false;
 
+let correctQuizAnswers = 0;
+
 
 // ======================================================
 // SCORES
@@ -340,13 +342,14 @@ if (card) {
 
         if (selectedAnswer === quiz.correct) {
 
+            correctQuizAnswers++;
+
             quizButtons[selectedAnswer]
                 .classList.add('correct');
 
 
             feedback.textContent =
                 'Goed gedaan! 🎉';
-
 
             feedback.classList.add(
                 'correct-feedback'
@@ -625,46 +628,46 @@ function saveScore() {
 
     function showEnd() {
 
-    quizMode = true;
+        quizMode = true;
 
-    // Score opslaan voor ingelogde gebruiker
-    saveScore();
+        // Score opslaan
+        saveScore();
 
-    removeQuizNextButton();
-
-
-    // Knoppen verbergen
-    agreeButton.style.display = 'none';
-    disagreeButton.style.display = 'none';
+        removeQuizNextButton();
 
 
-    if (agreeStack) {
-        agreeStack.style.display = 'none';
-    }
+        // Knoppen verbergen
+        agreeButton.style.display = 'none';
+        disagreeButton.style.display = 'none';
 
 
-    if (trashBin) {
-        trashBin.style.display = 'none';
-    }
+        if (agreeStack) {
+            agreeStack.style.display = 'none';
+        }
 
 
-    card.classList.remove('quiz-card');
+        if (trashBin) {
+            trashBin.style.display = 'none';
+        }
 
 
-    // Oude resultaatknop verwijderen
-    const oldResultButton =
-        document.getElementById('result-button');
-
-    if (oldResultButton) {
-        oldResultButton.remove();
-    }
+        card.classList.remove('quiz-card');
 
 
-    // ==================================================
-    // RESULTAAT IN DE CARD
-    // ==================================================
+        // Oude resultaatknop verwijderen
+        const oldResultButton =
+            document.getElementById('result-button');
 
-    statementText.innerHTML = `
+        if (oldResultButton) {
+            oldResultButton.remove();
+        }
+
+
+        // ==================================================
+        // RESULTAAT IN DE CARD
+        // ==================================================
+
+        statementText.innerHTML = `
 
         <div class="game-finished">
 
@@ -680,49 +683,21 @@ function saveScore() {
                 Dit is jouw resultaat:
             </p>
 
+            <div class="quiz-result">
 
-            <div class="score-results">
+                <strong class="quiz-result-score">
+                    ${correctQuizAnswers}/${quizQuestions.length}
+                </strong>
 
-                <div class="score-item">
-
-                    <span class="score-label">
-                        ACTIVITEIT
-                    </span>
-
-                    <strong class="score-value">
-                        ${formatScore(activityScore)}
-                    </strong>
-
-                    <span class="score-range">
-                        van -100 tot +100
-                    </span>
-
-                </div>
-
-
-                <div class="score-item">
-
-                    <span class="score-label">
-                        PRIORITEIT
-                    </span>
-
-                    <strong class="score-value">
-                        ${formatScore(priorityScore)}
-                    </strong>
-
-                    <span class="score-range">
-                        van -100 tot +100
-                    </span>
-
-                </div>
+                <span class="quiz-result-text">
+                    vragen goed
+                </span>
 
             </div>
 
         </div>
 
     `;
-
-
     // ==================================================
     // KNOP ONDER DE CARD
     // ==================================================
@@ -759,8 +734,6 @@ function saveScore() {
     progress.textContent =
         'Klaar!';
 }
-
-
     // ==================================================
     // SCORE OPMAKEN
     // ==================================================
