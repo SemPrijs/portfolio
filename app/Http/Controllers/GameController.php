@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Statement;
 use App\Models\QuizQuestion;
 use App\Models\UserAnswer;
+use App\Models\GameScore;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
@@ -67,8 +69,14 @@ class GameController extends Controller
     public function quiz(Request $request)
     {
         $request->validate([
-            'quiz_question_id' => ['required', 'exists:quiz_questions,id'],
-            'answer' => ['required', 'in:a,b,c,d'],
+            'quiz_question_id' => [
+                'required',
+                'exists:quiz_questions,id',
+            ],
+            'answer' => [
+                'required',
+                'in:a,b,c,d',
+            ],
         ]);
 
         $question = QuizQuestion::findOrFail(
@@ -95,17 +103,76 @@ class GameController extends Controller
     public function saveScore(Request $request)
     {
         $validated = $request->validate([
-            'activity_score' => ['required', 'integer'],
-            'priority_score' => ['required', 'integer'],
+            'activity_score' => [
+                'required',
+                'integer',
+            ],
+            'priority_score' => [
+                'required',
+                'integer',
+            ],
+            'quiz_correct' => [
+                'required',
+                'integer',
+                'min:0',
+            ],
+            'quiz_total' => [
+                'required',
+                'integer',
+                'min:0',
+            ],
         ]);
 
-        $request->session()->put([
+        /*
+        |--------------------------------------------------------------------------
+        | Ingelogde gebruiker
+        |--------------------------------------------------------------------------
+        */
+
+        if (auth()->check()) {
+
+            $user = auth()->user();
+
+            $user->update([
+                'activity_score' => $validated['activity_score'],
+                'priority_score' => $validated['priority_score'],
+                'quiz_correct' => $validated['quiz_correct'],
+                'quiz_total' => $validated['quiz_total'],
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'type' => 'user',
+                'message' => 'Score opgeslagen bij het account.',
+            ]);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Gast
+        |--------------------------------------------------------------------------
+        */
+
+        if (!$request->session()->has('guest_id')) {
+            $request->session()->put(
+                'guest_id',
+                (string) Str::uuid()
+            );
+        }
+
+        GameScore::create([
+            'user_id' => null,
+            'guest_id' => $request->session()->get('guest_id'),
             'activity_score' => $validated['activity_score'],
             'priority_score' => $validated['priority_score'],
+            'quiz_correct' => $validated['quiz_correct'],
+            'quiz_total' => $validated['quiz_total'],
         ]);
 
         return response()->json([
             'success' => true,
+            'type' => 'guest',
+            'message' => 'Score opgeslagen als gast.',
         ]);
     }
 }

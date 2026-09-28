@@ -595,6 +595,8 @@ function saveScore() {
         body: JSON.stringify({
             activity_score: activityScore,
             priority_score: priorityScore,
+            quiz_correct: correctQuizAnswers,
+            quiz_total: quizQuestions.length,
         }),
     })
     .then(response => {
