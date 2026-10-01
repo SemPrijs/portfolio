@@ -147,3 +147,6 @@ Route::get('/game', [GameController::class, 'index'])
 
 Route::post('/game/save-score', [GameController::class, 'saveScore'])
     ->name('game.save-score');
+
+Route::post('/game/statement', [GameController::class, 'statement'])
+    ->name('game.statement');

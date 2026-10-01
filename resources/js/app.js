@@ -15,6 +15,7 @@ let quizMode = false;
 let quizAnswered = false;
 
 let correctQuizAnswers = 0;
+let scoreSaved = false;
 
 
 // ======================================================
@@ -23,6 +24,7 @@ let correctQuizAnswers = 0;
 
 let activityScore = 0;
 let priorityScore = 0;
+
 const pointsPerStatement = 10;
 
 
@@ -72,7 +74,6 @@ if (card) {
             nextButton.remove();
         }
 
-
         nextButton =
             document.createElement('button');
 
@@ -82,16 +83,12 @@ if (card) {
         nextButton.textContent = 'Verder →';
         nextButton.style.display = 'none';
 
-
-        // Knop buiten de kaart plaatsen
         card.parentElement.appendChild(nextButton);
-
 
         nextButton.addEventListener(
             'click',
             nextAfterQuiz
         );
-
 
         return nextButton;
     }
@@ -120,45 +117,31 @@ if (card) {
 
         quizMode = false;
 
-
         removeQuizNextButton();
 
-
-        // EENS / ONEENS terug
         agreeButton.style.display = '';
         disagreeButton.style.display = '';
 
-
-        // Stapel terug
         if (agreeStack) {
             agreeStack.style.display = '';
         }
 
-
-        // Prullenbak terug
         if (trashBin) {
             trashBin.style.display = '';
         }
 
-
-        // Normale kaart
         card.classList.remove('quiz-card');
-
 
         agreeButton.disabled = false;
         disagreeButton.disabled = false;
 
-
-        // Geen stellingen meer?
         if (currentIndex >= statements.length) {
             showEnd();
             return;
         }
 
-
         statementText.textContent =
             statements[currentIndex].text;
-
 
         progress.textContent =
             `${currentIndex + 1} / ${statements.length}`;
@@ -176,34 +159,24 @@ if (card) {
             return;
         }
 
-
         quizMode = true;
         quizAnswered = false;
 
-
-        // Normale knoppen verbergen
         agreeButton.style.display = 'none';
         disagreeButton.style.display = 'none';
 
-
-        // Stapel verbergen
         if (agreeStack) {
             agreeStack.style.display = 'none';
         }
 
-
-        // Prullenbak verbergen
         if (trashBin) {
             trashBin.style.display = 'none';
         }
 
-
         card.classList.add('quiz-card');
-
 
         const quiz =
             quizQuestions[currentQuiz];
-
 
         const letters = [
             'A',
@@ -211,11 +184,6 @@ if (card) {
             'C',
             'D'
         ];
-
-
-        // ==================================================
-        // QUIZ IN KAART
-        // ==================================================
 
         statementText.innerHTML = `
 
@@ -262,26 +230,14 @@ if (card) {
 
         `;
 
-
-        // ==================================================
-        // VERDER KNOP BUITEN KAART
-        // ==================================================
-
         const nextButton =
             createQuizNextButton();
-
 
         progress.textContent =
             `Quiz ${currentQuiz + 1} / ${quizQuestions.length}`;
 
-
-        // ==================================================
-        // ANTWOORDKNOPPEN
-        // ==================================================
-
         const quizButtons =
             card.querySelectorAll('.quiz-answer');
-
 
         quizButtons.forEach(button => {
 
@@ -301,7 +257,7 @@ if (card) {
 
 
     // ==================================================
-    // QUIZ ANTWOORD CONTROLEREN
+    // QUIZ ANTWOORD CONTROLEREN + OPSLAAN
     // ==================================================
 
     function answerQuiz(selectedAnswer) {
@@ -310,21 +266,16 @@ if (card) {
             return;
         }
 
-
         quizAnswered = true;
-
 
         const quiz =
             quizQuestions[currentQuiz];
 
-
         const quizButtons =
             card.querySelectorAll('.quiz-answer');
 
-
         const feedback =
             card.querySelector('#quiz-feedback');
-
 
         const nextButton =
             document.getElementById('quiz-next');
@@ -337,6 +288,31 @@ if (card) {
 
 
         // ==================================================
+        // ANTWOORD OMZETTEN NAAR A/B/C/D
+        // ==================================================
+
+        const answerLetters = [
+            'a',
+            'b',
+            'c',
+            'd'
+        ];
+
+        const selectedAnswerLetter =
+            answerLetters[selectedAnswer];
+
+
+        // ==================================================
+        // ANTWOORD OPSLAAN IN DATABASE
+        // ==================================================
+
+        saveQuizAnswer(
+            quiz.id,
+            selectedAnswerLetter
+        );
+
+
+        // ==================================================
         // GOED ANTWOORD
         // ==================================================
 
@@ -346,7 +322,6 @@ if (card) {
 
             quizButtons[selectedAnswer]
                 .classList.add('correct');
-
 
             feedback.textContent =
                 'Goed gedaan! 🎉';
@@ -367,14 +342,11 @@ if (card) {
             quizButtons[selectedAnswer]
                 .classList.add('wrong');
 
-
             quizButtons[quiz.correct]
                 .classList.add('correct');
 
-
             feedback.textContent =
                 `Helaas! Het juiste antwoord is ${quiz.answers[quiz.correct]}.`;
-
 
             feedback.classList.add(
                 'wrong-feedback'
@@ -390,6 +362,75 @@ if (card) {
 
 
     // ==================================================
+    // QUIZ ANTWOORD NAAR DATABASE STUREN
+    // ==================================================
+
+    function saveQuizAnswer(
+        quizQuestionId,
+        answer
+    ) {
+
+        const csrfToken =
+            document.querySelector(
+                'meta[name="csrf-token"]'
+            )?.getAttribute('content');
+
+        if (!csrfToken) {
+            console.error(
+                'CSRF-token niet gevonden.'
+            );
+
+            return;
+        }
+
+
+        fetch('/game/quiz', {
+            method: 'POST',
+
+            credentials: 'same-origin',
+
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+            },
+
+            body: JSON.stringify({
+                quiz_question_id: quizQuestionId,
+                answer: answer,
+            }),
+        })
+        .then(response => {
+
+            if (!response.ok) {
+
+                throw new Error(
+                    `Quiz antwoord opslaan mislukt: ${response.status}`
+                );
+            }
+
+            return response.json();
+        })
+        .then(data => {
+
+            console.log(
+                'Quiz antwoord opgeslagen:',
+                data
+            );
+
+        })
+        .catch(error => {
+
+            console.error(
+                'Quiz antwoord kon niet worden opgeslagen:',
+                error
+            );
+
+        });
+    }
+
+
+    // ==================================================
     // VERDER NA QUIZ
     // ==================================================
 
@@ -397,14 +438,10 @@ if (card) {
 
         currentQuiz++;
 
-
         removeQuizNextButton();
-
 
         card.classList.remove('quiz-card');
 
-
-        // Als er nog stellingen zijn
         if (currentIndex < statements.length) {
 
             showStatement();
@@ -412,9 +449,6 @@ if (card) {
             return;
         }
 
-
-        // Als alle stellingen klaar zijn,
-        // maar er zijn nog quizvragen
         if (currentQuiz < quizQuestions.length) {
 
             showQuiz();
@@ -422,8 +456,6 @@ if (card) {
             return;
         }
 
-
-        // Alles klaar
         showEnd();
     }
 
@@ -434,20 +466,16 @@ if (card) {
 
     function answer(answer) {
 
-        // Tijdens quiz niets doen
         if (quizMode) {
             return;
         }
 
-
-        // Dubbel antwoord voorkomen
         if (
             card.classList.contains('swipe-up') ||
             card.classList.contains('swipe-down')
         ) {
             return;
         }
-
 
         const currentStatement =
             statements[currentIndex];
@@ -480,6 +508,16 @@ if (card) {
 
 
         // ==================================================
+        // ANTWOORD STELLING OPSLAAN
+        // ==================================================
+
+        saveStatementAnswer(
+            currentStatement.id,
+            answer
+        );
+
+
+        // ==================================================
         // EENS
         // ==================================================
 
@@ -487,13 +525,11 @@ if (card) {
 
             card.classList.add('swipe-up');
 
-
             if (agreeStack) {
 
                 agreeStack.classList.add(
                     'stack-active'
                 );
-
 
                 setTimeout(() => {
 
@@ -514,13 +550,11 @@ if (card) {
 
             card.classList.add('swipe-down');
 
-
             if (trashBin) {
 
                 trashBin.classList.add(
                     'trash-active'
                 );
-
 
                 setTimeout(() => {
 
@@ -540,7 +574,6 @@ if (card) {
         setTimeout(() => {
 
             currentIndex++;
-
 
             card.classList.remove(
                 'swipe-up'
@@ -568,70 +601,163 @@ if (card) {
         }, 500);
     }
 
-    // ======================================================
+
+    // ==================================================
+    // STELLING ANTWOORD NAAR DATABASE STUREN
+    // ==================================================
+
+    function saveStatementAnswer(
+        statementId,
+        answer
+    ) {
+
+        const csrfToken =
+            document.querySelector(
+                'meta[name="csrf-token"]'
+            )?.getAttribute('content');
+
+        if (!csrfToken) {
+            console.error(
+                'CSRF-token niet gevonden.'
+            );
+
+            return;
+        }
+
+
+        fetch('/game/statement', {
+            method: 'POST',
+
+            credentials: 'same-origin',
+
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+            },
+
+            body: JSON.stringify({
+                statement_id: statementId,
+                answer: answer,
+            }),
+        })
+        .then(response => {
+
+            if (!response.ok) {
+
+                throw new Error(
+                    `Stelling opslaan mislukt: ${response.status}`
+                );
+            }
+
+            return response.json();
+        })
+        .then(data => {
+
+            console.log(
+                'Stelling opgeslagen:',
+                data
+            );
+
+        })
+        .catch(error => {
+
+            console.error(
+                'Stelling kon niet worden opgeslagen:',
+                error
+            );
+
+        });
+    }
+// ======================================================
 // SCORE OPSLAAN
 // ======================================================
 
-function saveScore() {
+async function saveScore() {
+
+    console.log('SAVE SCORE START');
 
     const csrfToken =
-        document.querySelector('meta[name="csrf-token"]')
-            ?.getAttribute('content');
+        document.querySelector(
+            'meta[name="csrf-token"]'
+        )?.getAttribute('content');
 
     if (!csrfToken) {
-        console.error('CSRF-token niet gevonden.');
-        return;
+        console.error('GEEN CSRF TOKEN');
+        return false;
     }
 
-    fetch('/game/save-score', {
-        method: 'POST',
+    try {
 
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'X-CSRF-TOKEN': csrfToken,
-        },
+        const response = await fetch(
+            '/game/save-score',
+            {
+                method: 'POST',
 
-        body: JSON.stringify({
-            activity_score: activityScore,
-            priority_score: priorityScore,
-        }),
-    })
-    .then(response => {
+                credentials: 'same-origin',
+
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                },
+
+                body: JSON.stringify({
+                    activity_score: activityScore,
+                    priority_score: priorityScore,
+                    quiz_correct: correctQuizAnswers,
+                    quiz_total: quizQuestions.length,
+                }),
+            }
+        );
+
+        const data = await response.json();
+
+        console.log(
+            'SAVE SCORE RESPONSE:',
+            response.status,
+            data
+        );
 
         if (!response.ok) {
-            throw new Error(
-                `Score opslaan mislukt: ${response.status}`
+            console.error(
+                'SAVE SCORE MISLUKT'
             );
+
+            return false;
         }
 
-        return response.json();
-    })
-    .then(data => {
+        scoreSaved = true;
 
-        console.log('Score opgeslagen:', data);
+        console.log(
+            'SCORE STAAT IN DATABASE'
+        );
 
-    })
-    .catch(error => {
+        return true;
+
+    } catch (error) {
 
         console.error(
-            'De score kon niet worden opgeslagen:',
+            'SAVE SCORE ERROR:',
             error
         );
 
-    });
+        return false;
+    }
 }
 
     // ==================================================
     // EINDE
     // ==================================================
 
-    function showEnd() {
+    async function showEnd() {
 
         quizMode = true;
 
+
         // Score opslaan
-        saveScore();
+        await saveScore();
+
 
         removeQuizNextButton();
 
@@ -656,7 +782,9 @@ function saveScore() {
 
         // Oude resultaatknop verwijderen
         const oldResultButton =
-            document.getElementById('result-button');
+            document.getElementById(
+                'result-button'
+            );
 
         if (oldResultButton) {
             oldResultButton.remove();
@@ -669,84 +797,76 @@ function saveScore() {
 
         statementText.innerHTML = `
 
-        <div class="game-finished">
+            <div class="game-finished">
 
-            <div class="finished-icon">
-                🎉
+                <div class="finished-icon">
+                    🎉
+                </div>
+
+                <h2>
+                    Je bent klaar!
+                </h2>
+
+                <p>
+                    Dit is jouw resultaat:
+                </p>
+
+                <div class="quiz-result">
+
+                    <strong class="quiz-result-score">
+                        ${correctQuizAnswers}/${quizQuestions.length}
+                    </strong>
+
+                    <span class="quiz-result-text">
+                        vragen goed
+                    </span>
+
+                </div>
+
             </div>
 
-            <h2>
-                Je bent klaar!
-            </h2>
-
-            <p>
-                Dit is jouw resultaat:
-            </p>
-
-            <div class="quiz-result">
-
-                <strong class="quiz-result-score">
-                    ${correctQuizAnswers}/${quizQuestions.length}
-                </strong>
-
-                <span class="quiz-result-text">
-                    vragen goed
-                </span>
-
-            </div>
-
-        </div>
-
-    `;
-    // ==================================================
-    // KNOP ONDER DE CARD
-    // ==================================================
-
-    const resultButton =
-        document.createElement('button');
-
-    resultButton.type = 'button';
-    resultButton.id = 'result-button';
-    resultButton.className = 'result-button';
-
-    resultButton.textContent =
-        'Naar kieskompas →';
+        `;
 
 
-    resultButton.addEventListener(
-        'click',
-        () => {
+        // ==================================================
+        // KNOP ONDER DE CARD
+        // ==================================================
 
-            window.location.href =
-                '/klimaatkompas';
+        const resultButton =
+            document.createElement('button');
 
-        }
-    );
+        resultButton.type = 'button';
+
+        resultButton.id =
+            'result-button';
+
+        resultButton.className =
+            'result-button';
+
+        resultButton.textContent =
+            'Naar kieskompas →';
 
 
-    // Plaats de knop DIRECT onder de card
-    card.insertAdjacentElement(
-        'afterend',
-        resultButton
-    );
+        resultButton.addEventListener(
+            'click',
+            () => {
+
+                window.location.href =
+                    '/klimaatkompas';
+
+            }
+        );
 
 
-    progress.textContent =
-        'Klaar!';
-}
-    // ==================================================
-    // SCORE OPMAKEN
-    // ==================================================
+        card.insertAdjacentElement(
+            'afterend',
+            resultButton
+        );
 
-    function formatScore(score) {
 
-        if (score > 0) {
-            return `+${score}`;
-        }
-
-        return score;
+        progress.textContent =
+            'Klaar!';
     }
-
 
     // ==================================================
     // EENS / ONEENS KNOPPEN
@@ -776,15 +896,12 @@ function saveScore() {
         'pointerdown',
         (event) => {
 
-            // Tijdens quiz geen swipe
             if (quizMode) {
                 return;
             }
 
-
             startY = event.clientY;
             startX = event.clientX;
-
 
             card.setPointerCapture(
                 event.pointerId
@@ -797,19 +914,18 @@ function saveScore() {
         'pointerup',
         (event) => {
 
-            // Tijdens quiz geen swipe
             if (quizMode) {
                 return;
             }
 
+            const endY =
+                event.clientY;
 
-            const endY = event.clientY;
-            const endX = event.clientX;
-
+            const endX =
+                event.clientX;
 
             const differenceY =
                 startY - endY;
-
 
             const differenceX =
                 startX - endX;
@@ -845,4 +961,3 @@ function saveScore() {
 
     showStatement();
 }
-
