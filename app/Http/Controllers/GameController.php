@@ -6,6 +6,8 @@ use App\Models\GameScore;
 use App\Models\Statement;
 use App\Models\QuizQuestion;
 use App\Models\UserAnswer;
+use App\Models\GameScore;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -95,7 +97,11 @@ class GameController extends Controller
 
     public function quiz(Request $request)
     {
+<<<<<<< HEAD
         $validated = $request->validate([
+=======
+        $request->validate([
+>>>>>>> f27eb7fd22e09b2d3070cfbe070e551e430a2c95
             'quiz_question_id' => [
                 'required',
                 'exists:quiz_questions,id',
@@ -152,7 +158,11 @@ class GameController extends Controller
 
         /*
         |--------------------------------------------------------------------------
+<<<<<<< HEAD
         | Gebruiker met account
+=======
+        | Ingelogde gebruiker
+>>>>>>> f27eb7fd22e09b2d3070cfbe070e551e430a2c95
         |--------------------------------------------------------------------------
         */
 
@@ -170,7 +180,10 @@ class GameController extends Controller
             return response()->json([
                 'success' => true,
                 'type' => 'user',
+<<<<<<< HEAD
                 'user_id' => $user->id,
+=======
+>>>>>>> f27eb7fd22e09b2d3070cfbe070e551e430a2c95
                 'message' => 'Score opgeslagen bij het account.',
             ]);
         }
@@ -181,6 +194,7 @@ class GameController extends Controller
         |--------------------------------------------------------------------------
         */
 
+<<<<<<< HEAD
         $guestId = $request->session()->get('guest_id');
 
         if (!$guestId) {
@@ -195,6 +209,18 @@ class GameController extends Controller
         $gameScore = GameScore::create([
             'user_id' => null,
             'guest_id' => $guestId,
+=======
+        if (!$request->session()->has('guest_id')) {
+            $request->session()->put(
+                'guest_id',
+                (string) Str::uuid()
+            );
+        }
+
+        GameScore::create([
+            'user_id' => null,
+            'guest_id' => $request->session()->get('guest_id'),
+>>>>>>> f27eb7fd22e09b2d3070cfbe070e551e430a2c95
             'activity_score' => $validated['activity_score'],
             'priority_score' => $validated['priority_score'],
             'quiz_correct' => $validated['quiz_correct'],
@@ -204,9 +230,13 @@ class GameController extends Controller
         return response()->json([
             'success' => true,
             'type' => 'guest',
+<<<<<<< HEAD
             'guest_id' => $guestId,
             'game_score_id' => $gameScore->id,
             'message' => 'Gastscore opgeslagen.',
+=======
+            'message' => 'Score opgeslagen als gast.',
+>>>>>>> f27eb7fd22e09b2d3070cfbe070e551e430a2c95
         ]);
     }
 }
