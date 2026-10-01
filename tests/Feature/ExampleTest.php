@@ -27,10 +27,23 @@ class ExampleTest extends TestCase
 
     public function test_the_learning_page_renders_the_climate_style_only(): void
     {
-        $response = $this->get('/profiel');
+        $response = $this->get('/leren');
 
         $response->assertStatus(200);
         $response->assertSeeText('Leer over klimaat');
         $response->assertDontSeeText('Wat is klimaatverandering?');
+    }
+
+    public function test_learning_topics_are_loaded_from_the_database(): void
+    {
+        $this->assertTrue(class_exists(\App\Models\LearningTopic::class));
+
+        \App\Models\LearningTopic::seedDefaults();
+
+        $response = $this->get('/leren');
+
+        $response->assertStatus(200);
+        $response->assertSeeText('Klimaatverandering');
+        $response->assertSeeText('Energie');
     }
 }

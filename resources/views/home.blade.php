@@ -28,8 +28,7 @@
 
     <main class="hm-body">
         <div class="mock-illustration">
-            <span class="illustration-icon">🌿</span>
-            <span>Illustratie klimaat &amp; natuur</span>
+            <img src="{{ asset('Homepage.png') }}" alt="Homepage illustratie">
         </div>
 
         <div class="action-stack">
