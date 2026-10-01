@@ -23,15 +23,10 @@ class User extends Authenticatable
         'password',
         'activity_score',
         'priority_score',
-<<<<<<< HEAD
         'quiz_correct', 
         'quiz_total',
         'eens',
         'oneens',
-=======
-        'quiz_correct',
-        'quiz_total',
->>>>>>> f27eb7fd22e09b2d3070cfbe070e551e430a2c95
     ];
 
     /**

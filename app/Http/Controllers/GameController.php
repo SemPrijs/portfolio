@@ -181,8 +181,6 @@ class GameController extends Controller
         | Gast
         |--------------------------------------------------------------------------
         */
-
-<<<<<<< HEAD
         $guestId = $request->session()->get('guest_id');
 
         if (!$guestId) {
@@ -197,18 +195,6 @@ class GameController extends Controller
         $gameScore = GameScore::create([
             'user_id' => null,
             'guest_id' => $guestId,
-=======
-        if (!$request->session()->has('guest_id')) {
-            $request->session()->put(
-                'guest_id',
-                (string) Str::uuid()
-            );
-        }
-
-        GameScore::create([
-            'user_id' => null,
-            'guest_id' => $request->session()->get('guest_id'),
->>>>>>> f27eb7fd22e09b2d3070cfbe070e551e430a2c95
             'activity_score' => $validated['activity_score'],
             'priority_score' => $validated['priority_score'],
             'quiz_correct' => $validated['quiz_correct'],
@@ -218,13 +204,9 @@ class GameController extends Controller
         return response()->json([
             'success' => true,
             'type' => 'guest',
-<<<<<<< HEAD
             'guest_id' => $guestId,
             'game_score_id' => $gameScore->id,
             'message' => 'Gastscore opgeslagen.',
-=======
-            'message' => 'Score opgeslagen als gast.',
->>>>>>> f27eb7fd22e09b2d3070cfbe070e551e430a2c95
         ]);
     }
 }
