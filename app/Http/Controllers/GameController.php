@@ -6,10 +6,8 @@ use App\Models\GameScore;
 use App\Models\Statement;
 use App\Models\QuizQuestion;
 use App\Models\UserAnswer;
-use App\Models\GameScore;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class GameController extends Controller
 {
@@ -97,11 +95,8 @@ class GameController extends Controller
 
     public function quiz(Request $request)
     {
-<<<<<<< HEAD
         $validated = $request->validate([
-=======
-        $request->validate([
->>>>>>> f27eb7fd22e09b2d3070cfbe070e551e430a2c95
+
             'quiz_question_id' => [
                 'required',
                 'exists:quiz_questions,id',
@@ -158,11 +153,7 @@ class GameController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-<<<<<<< HEAD
         | Gebruiker met account
-=======
-        | Ingelogde gebruiker
->>>>>>> f27eb7fd22e09b2d3070cfbe070e551e430a2c95
         |--------------------------------------------------------------------------
         */
 
@@ -180,10 +171,7 @@ class GameController extends Controller
             return response()->json([
                 'success' => true,
                 'type' => 'user',
-<<<<<<< HEAD
                 'user_id' => $user->id,
-=======
->>>>>>> f27eb7fd22e09b2d3070cfbe070e551e430a2c95
                 'message' => 'Score opgeslagen bij het account.',
             ]);
         }
