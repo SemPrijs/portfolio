@@ -1,191 +1,7 @@
 import './bootstrap';
 
-
-// ======================================================
-// STELLINGEN
-// ======================================================
-//
-// 10 stellingen voor ACTIVITEIT
-// 10 stellingen voor PRIORITEIT
-//
-// EENS   = +10 punten
-// ONEENS = -10 punten
-//
-
-const statements = [
-
-    // =========================
-    // ACTIVITEIT - 10 STELLINGEN
-    // =========================
-
-    {
-        text: 'Ik probeer bewust mijn energieverbruik te verminderen.',
-        category: 'activity'
-    },
-
-    {
-        text: 'Ik gebruik zo vaak mogelijk de fiets of het openbaar vervoer.',
-        category: 'activity'
-    },
-
-    {
-        text: 'Ik probeer minder vlees te eten vanwege het klimaat.',
-        category: 'activity'
-    },
-
-    {
-        text: 'Ik probeer mijn woning zo energiezuinig mogelijk te maken.',
-        category: 'activity'
-    },
-
-    {
-        text: 'Ik let erop hoeveel energie mijn apparaten gebruiken.',
-        category: 'activity'
-    },
-
-    {
-        text: 'Ik probeer zo min mogelijk voedsel te verspillen.',
-        category: 'activity'
-    },
-
-    {
-        text: 'Ik koop regelmatig tweedehands producten om verspilling te verminderen.',
-        category: 'activity'
-    },
-
-    {
-        text: 'Ik probeer minder vaak het vliegtuig te nemen.',
-        category: 'activity'
-    },
-
-    {
-        text: 'Ik scheid mijn afval om grondstoffen opnieuw te kunnen gebruiken.',
-        category: 'activity'
-    },
-
-    {
-        text: 'Ik probeer in mijn dagelijks leven bewuste duurzame keuzes te maken.',
-        category: 'activity'
-    },
-
-
-    // =========================
-    // PRIORITEIT - 10 STELLINGEN
-    // =========================
-
-    {
-        text: 'Ik vind klimaatverandering een belangrijk probleem.',
-        category: 'priority'
-    },
-
-    {
-        text: 'Ik vind dat klimaatbeleid een hoge prioriteit moet hebben.',
-        category: 'priority'
-    },
-
-    {
-        text: 'Ik vind dat de overheid meer moet doen tegen klimaatverandering.',
-        category: 'priority'
-    },
-
-    {
-        text: 'Ik vind dat bedrijven meer verantwoordelijkheid moeten nemen voor hun CO₂-uitstoot.',
-        category: 'priority'
-    },
-
-    {
-        text: 'Ik vind dat Nederland sneller moet overstappen op duurzame energie.',
-        category: 'priority'
-    },
-
-    {
-        text: 'Ik vind dat klimaatbeleid belangrijker is dan economische groei op korte termijn.',
-        category: 'priority'
-    },
-
-    {
-        text: 'Ik vind dat duurzame keuzes voor iedereen makkelijker gemaakt moeten worden.',
-        category: 'priority'
-    },
-
-    {
-        text: 'Ik vind dat vervuilende producten en activiteiten zwaarder belast mogen worden.',
-        category: 'priority'
-    },
-
-    {
-        text: 'Ik vind dat de overheid meer moet investeren in openbaar vervoer.',
-        category: 'priority'
-    },
-
-    {
-        text: 'Ik vind dat klimaatbeleid een belangrijke rol moet spelen bij politieke keuzes.',
-        category: 'priority'
-    }
-];
-
-
-// ======================================================
-// QUIZVRAGEN
-// ======================================================
-
-const quizQuestions = [
-
-    {
-        question: 'Welke energiebron is hernieuwbaar?',
-        answers: [
-            'Kolen',
-            'Windenergie',
-            'Aardgas',
-            'Olie'
-        ],
-        correct: 1
-    },
-
-    {
-        question: 'Wat is CO₂?',
-        answers: [
-            'Een broeikasgas',
-            'Een soort plastic',
-            'Een brandstof',
-            'Een metaal'
-        ],
-        correct: 0
-    },
-
-    {
-        question: 'Welke keuze helpt om energie te besparen?',
-        answers: [
-            'Licht onnodig laten branden',
-            'Apparaten onnodig aan laten staan',
-            'Energiezuinige apparaten gebruiken',
-            'De verwarming hoger zetten'
-        ],
-        correct: 2
-    },
-
-    {
-        question: 'Welke vervoerswijze heeft doorgaans een lage CO₂-uitstoot per persoon?',
-        answers: [
-            'Vliegtuig',
-            'Auto',
-            'Trein',
-            'Motor'
-        ],
-        correct: 2
-    },
-
-    {
-        question: 'Wat kan helpen tegen klimaatverandering?',
-        answers: [
-            'Meer fossiele brandstoffen gebruiken',
-            'Energie besparen',
-            'Meer verspillen',
-            'Meer wegwerpproducten gebruiken'
-        ],
-        correct: 1
-    }
-];
+const statements = window.statements || [];
+const quizQuestions = window.quizQuestions || [];
 
 
 // ======================================================
@@ -198,6 +14,9 @@ let currentQuiz = 0;
 let quizMode = false;
 let quizAnswered = false;
 
+let correctQuizAnswers = 0;
+let scoreSaved = false;
+
 
 // ======================================================
 // SCORES
@@ -205,6 +24,7 @@ let quizAnswered = false;
 
 let activityScore = 0;
 let priorityScore = 0;
+
 const pointsPerStatement = 10;
 
 
@@ -254,7 +74,6 @@ if (card) {
             nextButton.remove();
         }
 
-
         nextButton =
             document.createElement('button');
 
@@ -264,16 +83,12 @@ if (card) {
         nextButton.textContent = 'Verder →';
         nextButton.style.display = 'none';
 
-
-        // Knop buiten de kaart plaatsen
         card.parentElement.appendChild(nextButton);
-
 
         nextButton.addEventListener(
             'click',
             nextAfterQuiz
         );
-
 
         return nextButton;
     }
@@ -302,45 +117,31 @@ if (card) {
 
         quizMode = false;
 
-
         removeQuizNextButton();
 
-
-        // EENS / ONEENS terug
         agreeButton.style.display = '';
         disagreeButton.style.display = '';
 
-
-        // Stapel terug
         if (agreeStack) {
             agreeStack.style.display = '';
         }
 
-
-        // Prullenbak terug
         if (trashBin) {
             trashBin.style.display = '';
         }
 
-
-        // Normale kaart
         card.classList.remove('quiz-card');
-
 
         agreeButton.disabled = false;
         disagreeButton.disabled = false;
 
-
-        // Geen stellingen meer?
         if (currentIndex >= statements.length) {
             showEnd();
             return;
         }
 
-
         statementText.textContent =
             statements[currentIndex].text;
-
 
         progress.textContent =
             `${currentIndex + 1} / ${statements.length}`;
@@ -358,34 +159,24 @@ if (card) {
             return;
         }
 
-
         quizMode = true;
         quizAnswered = false;
 
-
-        // Normale knoppen verbergen
         agreeButton.style.display = 'none';
         disagreeButton.style.display = 'none';
 
-
-        // Stapel verbergen
         if (agreeStack) {
             agreeStack.style.display = 'none';
         }
 
-
-        // Prullenbak verbergen
         if (trashBin) {
             trashBin.style.display = 'none';
         }
 
-
         card.classList.add('quiz-card');
-
 
         const quiz =
             quizQuestions[currentQuiz];
-
 
         const letters = [
             'A',
@@ -393,11 +184,6 @@ if (card) {
             'C',
             'D'
         ];
-
-
-        // ==================================================
-        // QUIZ IN KAART
-        // ==================================================
 
         statementText.innerHTML = `
 
@@ -444,26 +230,14 @@ if (card) {
 
         `;
 
-
-        // ==================================================
-        // VERDER KNOP BUITEN KAART
-        // ==================================================
-
         const nextButton =
             createQuizNextButton();
-
 
         progress.textContent =
             `Quiz ${currentQuiz + 1} / ${quizQuestions.length}`;
 
-
-        // ==================================================
-        // ANTWOORDKNOPPEN
-        // ==================================================
-
         const quizButtons =
             card.querySelectorAll('.quiz-answer');
-
 
         quizButtons.forEach(button => {
 
@@ -483,7 +257,7 @@ if (card) {
 
 
     // ==================================================
-    // QUIZ ANTWOORD CONTROLEREN
+    // QUIZ ANTWOORD CONTROLEREN + OPSLAAN
     // ==================================================
 
     function answerQuiz(selectedAnswer) {
@@ -492,21 +266,16 @@ if (card) {
             return;
         }
 
-
         quizAnswered = true;
-
 
         const quiz =
             quizQuestions[currentQuiz];
 
-
         const quizButtons =
             card.querySelectorAll('.quiz-answer');
 
-
         const feedback =
             card.querySelector('#quiz-feedback');
-
 
         const nextButton =
             document.getElementById('quiz-next');
@@ -519,18 +288,43 @@ if (card) {
 
 
         // ==================================================
+        // ANTWOORD OMZETTEN NAAR A/B/C/D
+        // ==================================================
+
+        const answerLetters = [
+            'a',
+            'b',
+            'c',
+            'd'
+        ];
+
+        const selectedAnswerLetter =
+            answerLetters[selectedAnswer];
+
+
+        // ==================================================
+        // ANTWOORD OPSLAAN IN DATABASE
+        // ==================================================
+
+        saveQuizAnswer(
+            quiz.id,
+            selectedAnswerLetter
+        );
+
+
+        // ==================================================
         // GOED ANTWOORD
         // ==================================================
 
         if (selectedAnswer === quiz.correct) {
 
+            correctQuizAnswers++;
+
             quizButtons[selectedAnswer]
                 .classList.add('correct');
 
-
             feedback.textContent =
                 'Goed gedaan! 🎉';
-
 
             feedback.classList.add(
                 'correct-feedback'
@@ -548,14 +342,11 @@ if (card) {
             quizButtons[selectedAnswer]
                 .classList.add('wrong');
 
-
             quizButtons[quiz.correct]
                 .classList.add('correct');
 
-
             feedback.textContent =
                 `Helaas! Het juiste antwoord is ${quiz.answers[quiz.correct]}.`;
-
 
             feedback.classList.add(
                 'wrong-feedback'
@@ -571,6 +362,75 @@ if (card) {
 
 
     // ==================================================
+    // QUIZ ANTWOORD NAAR DATABASE STUREN
+    // ==================================================
+
+    function saveQuizAnswer(
+        quizQuestionId,
+        answer
+    ) {
+
+        const csrfToken =
+            document.querySelector(
+                'meta[name="csrf-token"]'
+            )?.getAttribute('content');
+
+        if (!csrfToken) {
+            console.error(
+                'CSRF-token niet gevonden.'
+            );
+
+            return;
+        }
+
+
+        fetch('/game/quiz', {
+            method: 'POST',
+
+            credentials: 'same-origin',
+
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+            },
+
+            body: JSON.stringify({
+                quiz_question_id: quizQuestionId,
+                answer: answer,
+            }),
+        })
+        .then(response => {
+
+            if (!response.ok) {
+
+                throw new Error(
+                    `Quiz antwoord opslaan mislukt: ${response.status}`
+                );
+            }
+
+            return response.json();
+        })
+        .then(data => {
+
+            console.log(
+                'Quiz antwoord opgeslagen:',
+                data
+            );
+
+        })
+        .catch(error => {
+
+            console.error(
+                'Quiz antwoord kon niet worden opgeslagen:',
+                error
+            );
+
+        });
+    }
+
+
+    // ==================================================
     // VERDER NA QUIZ
     // ==================================================
 
@@ -578,14 +438,10 @@ if (card) {
 
         currentQuiz++;
 
-
         removeQuizNextButton();
-
 
         card.classList.remove('quiz-card');
 
-
-        // Als er nog stellingen zijn
         if (currentIndex < statements.length) {
 
             showStatement();
@@ -593,9 +449,6 @@ if (card) {
             return;
         }
 
-
-        // Als alle stellingen klaar zijn,
-        // maar er zijn nog quizvragen
         if (currentQuiz < quizQuestions.length) {
 
             showQuiz();
@@ -603,8 +456,6 @@ if (card) {
             return;
         }
 
-
-        // Alles klaar
         showEnd();
     }
 
@@ -615,20 +466,16 @@ if (card) {
 
     function answer(answer) {
 
-        // Tijdens quiz niets doen
         if (quizMode) {
             return;
         }
 
-
-        // Dubbel antwoord voorkomen
         if (
             card.classList.contains('swipe-up') ||
             card.classList.contains('swipe-down')
         ) {
             return;
         }
-
 
         const currentStatement =
             statements[currentIndex];
@@ -661,6 +508,16 @@ if (card) {
 
 
         // ==================================================
+        // ANTWOORD STELLING OPSLAAN
+        // ==================================================
+
+        saveStatementAnswer(
+            currentStatement.id,
+            answer
+        );
+
+
+        // ==================================================
         // EENS
         // ==================================================
 
@@ -668,13 +525,11 @@ if (card) {
 
             card.classList.add('swipe-up');
 
-
             if (agreeStack) {
 
                 agreeStack.classList.add(
                     'stack-active'
                 );
-
 
                 setTimeout(() => {
 
@@ -695,13 +550,11 @@ if (card) {
 
             card.classList.add('swipe-down');
 
-
             if (trashBin) {
 
                 trashBin.classList.add(
                     'trash-active'
                 );
-
 
                 setTimeout(() => {
 
@@ -721,7 +574,6 @@ if (card) {
         setTimeout(() => {
 
             currentIndex++;
-
 
             card.classList.remove(
                 'swipe-up'
@@ -749,215 +601,272 @@ if (card) {
         }, 500);
     }
 
-    // ======================================================
+
+    // ==================================================
+    // STELLING ANTWOORD NAAR DATABASE STUREN
+    // ==================================================
+
+    function saveStatementAnswer(
+        statementId,
+        answer
+    ) {
+
+        const csrfToken =
+            document.querySelector(
+                'meta[name="csrf-token"]'
+            )?.getAttribute('content');
+
+        if (!csrfToken) {
+            console.error(
+                'CSRF-token niet gevonden.'
+            );
+
+            return;
+        }
+
+
+        fetch('/game/statement', {
+            method: 'POST',
+
+            credentials: 'same-origin',
+
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+            },
+
+            body: JSON.stringify({
+                statement_id: statementId,
+                answer: answer,
+            }),
+        })
+        .then(response => {
+
+            if (!response.ok) {
+
+                throw new Error(
+                    `Stelling opslaan mislukt: ${response.status}`
+                );
+            }
+
+            return response.json();
+        })
+        .then(data => {
+
+            console.log(
+                'Stelling opgeslagen:',
+                data
+            );
+
+        })
+        .catch(error => {
+
+            console.error(
+                'Stelling kon niet worden opgeslagen:',
+                error
+            );
+
+        });
+    }
+// ======================================================
 // SCORE OPSLAAN
 // ======================================================
 
-function saveScore() {
+async function saveScore() {
+
+    console.log('SAVE SCORE START');
 
     const csrfToken =
-        document.querySelector('meta[name="csrf-token"]')
-            ?.getAttribute('content');
+        document.querySelector(
+            'meta[name="csrf-token"]'
+        )?.getAttribute('content');
 
     if (!csrfToken) {
-        console.error('CSRF-token niet gevonden.');
-        return;
+        console.error('GEEN CSRF TOKEN');
+        return false;
     }
 
-    fetch('/game/save-score', {
-        method: 'POST',
+    try {
 
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'X-CSRF-TOKEN': csrfToken,
-        },
+        const response = await fetch(
+            '/game/save-score',
+            {
+                method: 'POST',
 
-        body: JSON.stringify({
-            activity_score: activityScore,
-            priority_score: priorityScore,
-        }),
-    })
-    .then(response => {
+                credentials: 'same-origin',
+
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                },
+
+                body: JSON.stringify({
+                    activity_score: activityScore,
+                    priority_score: priorityScore,
+                    quiz_correct: correctQuizAnswers,
+                    quiz_total: quizQuestions.length,
+                }),
+            }
+        );
+
+        const data = await response.json();
+
+        console.log(
+            'SAVE SCORE RESPONSE:',
+            response.status,
+            data
+        );
 
         if (!response.ok) {
-            throw new Error(
-                `Score opslaan mislukt: ${response.status}`
+            console.error(
+                'SAVE SCORE MISLUKT'
             );
+
+            return false;
         }
 
-        return response.json();
-    })
-    .then(data => {
+        scoreSaved = true;
 
-        console.log('Score opgeslagen:', data);
+        console.log(
+            'SCORE STAAT IN DATABASE'
+        );
 
-    })
-    .catch(error => {
+        return true;
+
+    } catch (error) {
 
         console.error(
-            'De score kon niet worden opgeslagen:',
+            'SAVE SCORE ERROR:',
             error
         );
 
-    });
+        return false;
+    }
 }
 
     // ==================================================
     // EINDE
     // ==================================================
 
-    function showEnd() {
+    async function showEnd() {
 
-    quizMode = true;
-
-    // Score opslaan voor ingelogde gebruiker
-    saveScore();
-
-    removeQuizNextButton();
+        quizMode = true;
 
 
-    // Knoppen verbergen
-    agreeButton.style.display = 'none';
-    disagreeButton.style.display = 'none';
+        // Score opslaan
+        await saveScore();
 
 
-    if (agreeStack) {
-        agreeStack.style.display = 'none';
-    }
+        removeQuizNextButton();
 
 
-    if (trashBin) {
-        trashBin.style.display = 'none';
-    }
+        // Knoppen verbergen
+        agreeButton.style.display = 'none';
+        disagreeButton.style.display = 'none';
 
 
-    card.classList.remove('quiz-card');
+        if (agreeStack) {
+            agreeStack.style.display = 'none';
+        }
 
 
-    // Oude resultaatknop verwijderen
-    const oldResultButton =
-        document.getElementById('result-button');
-
-    if (oldResultButton) {
-        oldResultButton.remove();
-    }
+        if (trashBin) {
+            trashBin.style.display = 'none';
+        }
 
 
-    // ==================================================
-    // RESULTAAT IN DE CARD
-    // ==================================================
-
-    statementText.innerHTML = `
-
-        <div class="game-finished">
-
-            <div class="finished-icon">
-                🎉
-            </div>
-
-            <h2>
-                Je bent klaar!
-            </h2>
-
-            <p>
-                Dit is jouw resultaat:
-            </p>
+        card.classList.remove('quiz-card');
 
 
-            <div class="score-results">
+        // Oude resultaatknop verwijderen
+        const oldResultButton =
+            document.getElementById(
+                'result-button'
+            );
 
-                <div class="score-item">
+        if (oldResultButton) {
+            oldResultButton.remove();
+        }
 
-                    <span class="score-label">
-                        ACTIVITEIT
-                    </span>
 
-                    <strong class="score-value">
-                        ${formatScore(activityScore)}
-                    </strong>
+        // ==================================================
+        // RESULTAAT IN DE CARD
+        // ==================================================
 
-                    <span class="score-range">
-                        van -100 tot +100
-                    </span>
+        statementText.innerHTML = `
 
+            <div class="game-finished">
+
+                <div class="finished-icon">
+                    🎉
                 </div>
 
+                <h2>
+                    Je bent klaar!
+                </h2>
 
-                <div class="score-item">
+                <p>
+                    Dit is jouw resultaat:
+                </p>
 
-                    <span class="score-label">
-                        PRIORITEIT
-                    </span>
+                <div class="quiz-result">
 
-                    <strong class="score-value">
-                        ${formatScore(priorityScore)}
+                    <strong class="quiz-result-score">
+                        ${correctQuizAnswers}/${quizQuestions.length}
                     </strong>
 
-                    <span class="score-range">
-                        van -100 tot +100
+                    <span class="quiz-result-text">
+                        vragen goed
                     </span>
 
                 </div>
 
             </div>
 
-        </div>
-
-    `;
+        `;
 
 
-    // ==================================================
-    // KNOP ONDER DE CARD
-    // ==================================================
+        // ==================================================
+        // KNOP ONDER DE CARD
+        // ==================================================
 
-    const resultButton =
-        document.createElement('button');
+        const resultButton =
+            document.createElement('button');
 
-    resultButton.type = 'button';
-    resultButton.id = 'result-button';
-    resultButton.className = 'result-button';
+        resultButton.type = 'button';
 
-    resultButton.textContent =
-        'Naar kieskompas →';
+        resultButton.id =
+            'result-button';
 
+        resultButton.className =
+            'result-button';
 
-    resultButton.addEventListener(
-        'click',
-        () => {
-
-            window.location.href =
-                '/klimaatkompas';
-
-        }
-    );
+        resultButton.textContent =
+            'Naar kieskompas →';
 
 
-    // Plaats de knop DIRECT onder de card
-    card.insertAdjacentElement(
-        'afterend',
-        resultButton
-    );
+        resultButton.addEventListener(
+            'click',
+            () => {
+
+                window.location.href =
+                    '/klimaatkompas';
+
+            }
+        );
 
 
-    progress.textContent =
-        'Klaar!';
-}
+        card.insertAdjacentElement(
+            'afterend',
+            resultButton
+        );
 
 
-    // ==================================================
-    // SCORE OPMAKEN
-    // ==================================================
-
-    function formatScore(score) {
-
-        if (score > 0) {
-            return `+${score}`;
-        }
-
-        return score;
+        progress.textContent =
+            'Klaar!';
     }
-
 
     // ==================================================
     // EENS / ONEENS KNOPPEN
@@ -987,15 +896,12 @@ function saveScore() {
         'pointerdown',
         (event) => {
 
-            // Tijdens quiz geen swipe
             if (quizMode) {
                 return;
             }
 
-
             startY = event.clientY;
             startX = event.clientX;
-
 
             card.setPointerCapture(
                 event.pointerId
@@ -1008,19 +914,18 @@ function saveScore() {
         'pointerup',
         (event) => {
 
-            // Tijdens quiz geen swipe
             if (quizMode) {
                 return;
             }
 
+            const endY =
+                event.clientY;
 
-            const endY = event.clientY;
-            const endX = event.clientX;
-
+            const endX =
+                event.clientX;
 
             const differenceY =
                 startY - endY;
-
 
             const differenceX =
                 startX - endX;
@@ -1056,4 +961,3 @@ function saveScore() {
 
     showStatement();
 }
-

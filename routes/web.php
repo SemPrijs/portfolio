@@ -69,19 +69,21 @@ Route::get('/admin', function (Request $request) {
 })->name('admin');
 
 Route::post('/admin/statements', function (Request $request) {
-	abort_unless($request->session()->get('is_admin'), 403);
+    abort_unless($request->session()->get('is_admin'), 403);
 
-	$validated = $request->validate([
-		'text' => ['required', 'string', 'max:1000'],
-	]);
+    $validated = $request->validate([
+        'text' => ['required', 'string', 'max:1000'],
+        'category' => ['required', 'in:activity,priority'],
+    ]);
 
-	Statement::create([
-		'text' => $validated['text'],
-		'aantal_eens' => 0,
-		'aantal_oneens' => 0,
-	]);
+    Statement::create([
+        'text' => $validated['text'],
+        'category' => $validated['category'],
+        'aantal_eens' => 0,
+        'aantal_oneens' => 0,
+    ]);
 
-	return redirect()->route('admin')->with('success', 'Stelling toegevoegd.');
+    return redirect()->route('admin')->with('success', 'Stelling toegevoegd.');
 })->name('admin.statements.store');
 
 Route::view('/over-ons', 'over_ons')->name('over_ons');
@@ -94,7 +96,11 @@ Route::get('/register', [RegisterController::class, 'show'])
 Route::post('/register', [RegisterController::class, 'register'])
     ->name('register.store');
 
-Route::view('/game', 'game')->name('game');
+Route::get('/game', [GameController::class, 'index'])
+    ->name('game');
 
 Route::post('/game/save-score', [GameController::class, 'saveScore'])
     ->name('game.save-score');
+
+Route::post('/game/statement', [GameController::class, 'statement'])
+    ->name('game.statement');
