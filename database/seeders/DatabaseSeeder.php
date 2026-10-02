@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\AdminAccount;
+use App\Models\LearningTopic;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -29,5 +30,7 @@ class DatabaseSeeder extends Seeder
                 'is_active' => true,
             ],
         );
+
+        LearningTopic::seedDefaults();
     }
 }
