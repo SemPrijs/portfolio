@@ -6,101 +6,105 @@
 
 <div class="game-page">
 
-```
-<header class="game-header">
-    <h1>KliMaten</h1>
-    <p>Wat vind jij?</p>
-</header>
+    <header class="game-header">
+        <h1>KliMaten</h1>
+        <p>Wat vind jij?</p>
+    </header>
 
-<main class="game-content">
+    <main class="game-content">
 
-    <div class="game-board">
+        <div class="game-board">
 
-        {{-- Stapel met eens --}}
-        <div class="agree-stack">
-            <div class="stack-paper stack-paper-3"></div>
-            <div class="stack-paper stack-paper-2"></div>
-            <div class="stack-paper stack-paper-1"></div>
+            {{-- Stapel met eens --}}
+            <div class="agree-stack">
+                <div class="stack-paper stack-paper-3"></div>
+                <div class="stack-paper stack-paper-2"></div>
+                <div class="stack-paper stack-paper-1"></div>
 
-            <div class="stack-label">
-                <span>✓</span>
-                <span>EENS ↑</span>
+                <div class="stack-label">
+                    <span>✓</span>
+                    <span>EENS ↑</span>
+                </div>
             </div>
-        </div>
 
-        {{-- De huidige stelling / quizvraag --}}
-        <div class="swipe-area">
+            {{-- De huidige stelling / quizvraag --}}
+            <div class="swipe-area">
 
-            <div id="statement-card" class="statement-card">
+                <div id="statement-card" class="statement-card">
 
-                <div class="statement-label">
-                    STELLING
+                    <div class="statement-label">
+                        STELLING
+                    </div>
+
+                    <p id="statement-text"></p>
+
                 </div>
 
-                <p id="statement-text"></p>
+            </div>
+
+            {{-- Quiz antwoorden komen BUITEN de card --}}
+            <div
+                id="quiz-answers-container"
+                class="quiz-answers-container"
+            ></div>
+
+            {{-- Quiz Verder knop komt BUITEN de card --}}
+            <div
+                id="quiz-next-container"
+                class="quiz-next-container"
+            ></div>
+
+            {{-- Prullenbak --}}
+            <div id="trash-bin" class="trash-bin">
+
+                <div class="trash-lid"></div>
+
+                <div class="trash-body">
+                    <div class="trash-lines"></div>
+                    <span>🗑️</span>
+                </div>
+
+                <div class="trash-label">
+                    ↓ ONEENS
+                </div>
 
             </div>
 
         </div>
 
-        {{-- Quiz antwoorden komen BUITEN de card --}}
-        <div
-            id="quiz-answers-container"
-            class="quiz-answers-container"
-        ></div>
+        {{-- Normale Eens / Oneens knoppen --}}
+        <div class="game-actions">
 
-        {{-- Quiz Verder knop komt BUITEN de card --}}
-        <div
-            id="quiz-next-container"
-            class="quiz-next-container"
-        ></div>
+            <button
+                type="button"
+                id="agree-button"
+                class="game-button agree"
+            >
+                👍 Eens
+            </button>
 
-        {{-- Prullenbak --}}
-        <div id="trash-bin" class="trash-bin">
-
-            <div class="trash-lid"></div>
-
-            <div class="trash-body">
-                <div class="trash-lines"></div>
-                <span>🗑️</span>
-            </div>
-
-            <div class="trash-label">
-                ↓ ONEENS
-            </div>
+            <button
+                type="button"
+                id="disagree-button"
+                class="game-button disagree"
+            >
+                👎 Oneens
+            </button>
 
         </div>
 
-    </div>
+        <div id="progress" class="progress">
+            1 / 20
+        </div>
 
-    {{-- Normale Eens / Oneens knoppen --}}
-    <div class="game-actions">
-
-        <button
-            type="button"
-            id="agree-button"
-            class="game-button agree"
-        >
-            👍 Eens
-        </button>
-
-        <button
-            type="button"
-            id="disagree-button"
-            class="game-button disagree"
-        >
-            👎 Oneens
-        </button>
-
-    </div>
-
-    <div id="progress" class="progress">
-        1 / 15
-    </div>
-
-</main>
-```
+    </main>
 
 </div>
+
+{{-- Database quizvragen beschikbaar maken voor app.js --}}
+<script>
+    window.statements = @json($statements);
+    window.quizQuestions = @json($quizQuestions);
+</script>
 
 @endsection

@@ -8,19 +8,29 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('activity_score')->default(0);
-            $table->integer('priority_score')->default(0);
+        Schema::create('game_scores', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignId('user_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
+
+            $table->string('guest_id')
+                ->nullable()
+                ->index();
+
+            $table->integer('activity_score');
+            $table->integer('priority_score');
+            $table->integer('quiz_correct')->default(0);
+            $table->integer('quiz_total')->default(0);
+
+            $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn([
-                'activity_score',
-                'priority_score',
-            ]);
-        });
+        Schema::dropIfExists('game_scores');
     }
 };
