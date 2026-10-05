@@ -8,7 +8,15 @@
         <div class="hm-header-top">
             <a href="{{ route('home') }}" class="topics-back" aria-label="Terug naar home">←</a>
             <div class="chip">🧭 KlimaatKompas</div>
-            <div class="menu-dots">⋯</div>
+            <button
+                type="button"
+                class="menu-dots"
+                id="score-controls-toggle"
+                aria-expanded="false"
+                aria-controls="score-controls"
+                aria-label="Punten aanpassen tonen">
+                ⌞ ⌝
+            </button>
         </div>
 
         <div class="hm-title">
@@ -25,10 +33,6 @@
     <main class="hm-body">
 
         <div class="climate-compass">
-
-            <div class="compass-title top">
-                Hoge activiteit
-            </div>
 
             <div class="compass-grid">
 
@@ -56,24 +60,19 @@
                     class="compass-result"
                     id="compass-result"
                     style="
-                        left: {{ ($priority + 100) / 2 }}%;
-                        top: {{ 100 - (($activity + 100) / 2) }}%;
+                        left: {{ ($activity + 100) / 2 }}%;
+                        top: {{ 100 - (($priority + 100) / 2) }}%;
                     "
                     title="Klimaatprioriteit: {{ $priority }}, activiteit: {{ $activity }}">
                 </div>
 
             </div>
 
-            <div class="compass-axis-labels">
-                <span>← Lage klimaatprioriteit</span>
-                <span>Hoge klimaatprioriteit →</span>
-            </div>
-
             <p class="compass-note" id="compass-note">
                 Klimaatprioriteit: {{ $priority }} | Activiteit: {{ $activity }}
             </p>
 
-            <div class="score-controls" aria-label="Punten aanpassen voor presentatie">
+            <div class="score-controls" id="score-controls" aria-label="Punten aanpassen voor presentatie" hidden>
                 <div class="score-control">
                     <span>Prioriteit</span>
                     <strong id="priority-score">{{ $priority }}</strong>
@@ -224,12 +223,6 @@
         text-align: center;
     }
 
-    .compass-title {
-        font-weight: 700;
-        margin-bottom: 5px;
-        font-size: 0.875rem;
-    }
-
     .compass-grid {
         position: relative;
         width: 100%;
@@ -300,14 +293,6 @@
         border-radius: 50%;
     }
 
-    .compass-axis-labels {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 5px;
-        font-size: 10px;
-        font-weight: 600;
-    }
-
     .compass-note {
         margin: 4px 0 0;
         font-size: 10px;
@@ -320,6 +305,10 @@
         gap: 6px;
         margin-top: 6px;
         text-align: left;
+    }
+
+    .score-controls[hidden] {
+        display: none;
     }
 
     .score-control {
@@ -480,6 +469,8 @@
         const savedResults = document.getElementById('saved-results');
         const resultsList = document.getElementById('saved-results-list');
         const clearButton = document.getElementById('clear-saved-results');
+        const scoreControls = document.getElementById('score-controls');
+        const scoreControlsToggle = document.getElementById('score-controls-toggle');
 
         function readResults() {
             const cookie = document.cookie
@@ -554,8 +545,8 @@
                 activity: Math.max(-100, Math.min(100, Number(result.activity))),
             };
 
-            compassResult.style.left = `${(currentResult.priority + 100) / 2}%`;
-            compassResult.style.top = `${100 - ((currentResult.activity + 100) / 2)}%`;
+            compassResult.style.left = `${(currentResult.activity + 100) / 2}%`;
+            compassResult.style.top = `${100 - ((currentResult.priority + 100) / 2)}%`;
             compassResult.title = `Klimaatprioriteit: ${currentResult.priority}, activiteit: ${currentResult.activity}`;
             compassNote.textContent = `Klimaatprioriteit: ${currentResult.priority} | Activiteit: ${currentResult.activity}`;
             document.getElementById('priority-score').textContent = currentResult.priority;
@@ -570,6 +561,16 @@
                 const step = Number(button.dataset.scoreStep);
                 updateCompass({ ...currentResult, [axis]: currentResult[axis] + step });
             });
+        });
+
+        scoreControlsToggle.addEventListener('click', () => {
+            const isHidden = scoreControls.hidden;
+            scoreControls.hidden = !isHidden;
+            scoreControlsToggle.setAttribute('aria-expanded', String(isHidden));
+            scoreControlsToggle.setAttribute(
+                'aria-label',
+                isHidden ? 'Punten aanpassen verbergen' : 'Punten aanpassen tonen',
+            );
         });
 
         saveButton.addEventListener('click', () => {

@@ -13,7 +13,10 @@ class GameController extends Controller
 {
     public function index()
     {
-        $statements = Statement::inRandomOrder()
+        $statements = Statement::query()
+            ->whereIn('category', ['activity', 'priority'])
+            ->inRandomOrder()
+            ->limit(20)
             ->get([
                 'id',
                 'text',
@@ -149,6 +152,11 @@ class GameController extends Controller
                 'integer',
                 'min:0',
             ],
+        ]);
+
+        $request->session()->put([
+            'activity_score' => $validated['activity_score'],
+            'priority_score' => $validated['priority_score'],
         ]);
 
         /*

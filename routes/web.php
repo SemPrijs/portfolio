@@ -64,7 +64,7 @@ Route::get('/admin', function (Request $request) {
 
 	return view('admin', [
 		'adminAccounts' => AdminAccount::orderBy('name')->get(),
-		'statements' => Statement::allOrdered(),
+		'statements' => Statement::selectOrdered()->paginate(10),
 	]);
 })->name('admin');
 
