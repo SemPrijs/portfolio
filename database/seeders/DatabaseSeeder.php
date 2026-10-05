@@ -37,6 +37,11 @@ class DatabaseSeeder extends Seeder
             ],
         );
 
+        $this->call([
+            QuizQuestionSeeder::class,
+            StatementSeeder::class,
+        ]);
+
         LearningTopic::seedDefaults();
     }
 }

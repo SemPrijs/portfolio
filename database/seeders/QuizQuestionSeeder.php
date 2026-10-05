@@ -9,7 +9,7 @@ class QuizQuestionSeeder extends Seeder
 {
     public function run(): void
     {
-        QuizQuestion::insert([
+        $questions = [
             [
                 'question' => 'Welke energiebron is hernieuwbaar?',
                 'answer_a' => 'Kolen',
@@ -54,6 +54,13 @@ class QuizQuestionSeeder extends Seeder
                 'answer_d' => 'Meer wegwerpproducten gebruiken',
                 'correct_answer' => 'b',
             ],
-        ]);
+        ];
+
+        foreach ($questions as $question) {
+            QuizQuestion::updateOrCreate(
+                ['question' => $question['question']],
+                $question,
+            );
+        }
     }
 }
