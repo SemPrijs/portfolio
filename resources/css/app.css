@@ -2695,6 +2695,10 @@ body {
     overflow-y: auto;
 }
 
+body:has(.about-page) {
+    align-items: flex-start;
+}
+
 .about-page .about-back {
     margin-bottom: 14px;
     color: #166534;
@@ -2711,6 +2715,13 @@ body {
 .admin-page {
   background: linear-gradient(180deg, #071021 0%, #081526 100%);
   color: #f8fafc;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.admin-page > .admin-card,
+.admin-page > .admin-table-wrap {
+    flex: 0 0 auto;
 }
 
 .admin-page .admin-card {
@@ -2786,6 +2797,33 @@ body {
   background: rgba(2,6,23,0.6);
   border: 1px solid rgba(255,255,255,0.03);
   box-shadow: 0 10px 30px rgba(2,6,23,0.7);
+}
+
+.admin-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    color: #cfe8ff;
+    font-size: 0.875rem;
+}
+
+.admin-pagination a {
+    padding: 8px 12px;
+    border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 8px;
+    color: #f8fafc;
+    text-decoration: none;
+}
+
+.admin-pagination a:hover,
+.admin-pagination a:focus-visible {
+    background: rgba(255,255,255,0.1);
+}
+
+.admin-pagination .disabled {
+    opacity: 0.5;
 }
 
 .admin-card,
@@ -3021,6 +3059,12 @@ body {
 
     .team-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1100px) {
+    body:has(.admin-page) {
+        align-items: flex-start;
     }
 }
 
