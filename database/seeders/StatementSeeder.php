@@ -93,12 +93,14 @@ class StatementSeeder extends Seeder
         ];
 
         foreach ($statements as $statement) {
-            Statement::create([
-                'text' => $statement['text'],
-                'category' => $statement['category'],
-                'aantal_eens' => 0,
-                'aantal_oneens' => 0,
-            ]);
+            Statement::firstOrCreate(
+                ['text' => $statement['text']],
+                [
+                    'category' => $statement['category'],
+                    'aantal_eens' => 0,
+                    'aantal_oneens' => 0,
+                ],
+            );
         }
     }
 }
