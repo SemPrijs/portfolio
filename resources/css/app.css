@@ -275,6 +275,7 @@ body {
    ========================================================= */
 
 .mock-illustration {
+    flex: 0 0 auto;
     min-height: 88px;
     border-radius: 28px;
     display: flex;
@@ -323,6 +324,7 @@ body {
    ========================================================= */
 
 .action-stack {
+    flex: 0 0 auto;
     margin-top: 10px;
 
     display: flex;
